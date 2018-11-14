@@ -10,4 +10,4 @@ import reducer from './reducer';
 // Build the middleware for intercepting and dispatching navigation actions
 //const myRouterMiddleware = routerMiddleware(history);
 export const store = createStore(reducer);
-console.log(store);
+console.log('store: ' + store);
