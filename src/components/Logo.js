@@ -18,7 +18,7 @@ export default class Logo extends Component {
 
     //use state for rotation/effects
     handleClick() {
-        return (<a>
+        return (<a href={spartanLogo}>
                 <img src={spartanLogo} className="topLogo2" alt="logo" onClick={this.handleClick}/>
             </a>
         )
@@ -26,7 +26,7 @@ export default class Logo extends Component {
 
     render() {
         return (
-            <a>
+            <a href={spartanLogo}>
                 <img src={spartanLogo} className="topLogo" alt="logo" onClick={this.handleClick}/>
             </a>
         );
