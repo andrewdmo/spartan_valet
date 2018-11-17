@@ -69,22 +69,21 @@
 }
 
 .topLogo {
-    animation: App-logo-spin infinite 20s linear;
     width: 20vmin;
     position: absolute;
     left: 5vw;
     top: 5vh;
     opacity: .8;
     z-index: 7;
+    transition: all 1s;
 }
 
-.topLogo2 {
+.topLogo.clockwise {
+    animation: App-logo-spin infinite 20s linear;
+}
+
+.topLogo.unclockwise {
     animation: App-logo-spin2 infinite 20s linear;
-    width: 20vmin;
-    position: absolute;
-    left: 5vw;
-    top: 5vh;
-    opacity: .8;
 }
 
 .topTitle {

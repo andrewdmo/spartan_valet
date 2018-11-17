@@ -1,4 +1,3 @@
-import './index.css';
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,12 +9,19 @@ import {store, history} from './redux/configureStore';
 
 ReactDOM.render((
         <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <Switch>
-                    <Route path="/" component={App}/>
-                </Switch>
-            </ConnectedRouter>
+            <App/>
         </Provider>
     ),
     document.getElementById('root')
 );
+
+{/*<ConnectedRouter history={history}>*/
+}
+{/*<Switch>*/
+}
+{/*<Route path="/" component={App}/>*/
+}
+{/*</Switch>*/
+}
+{/*</ConnectedRouter>*/
+}

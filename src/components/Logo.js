@@ -4,32 +4,35 @@ import spartanLogo from '../assets/spartanLogo.png';
 export default class Logo extends Component {
     constructor(props) {
         super(props);
-        this.state = {isToggleOn: true};
+        this.state = {
+            isToggleOn: true,
+            spin: 'topLogo clockwise', //todo: cleanup vars
+        };
 
         // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
+        this.logoClick = this.logoClick.bind(this);
     }
 
-    // handleClick() {
-    //     this.setState(state => ({
-    //         isToggleOn: !state.isToggleOn
-    //     }));
-    // }
 
-    //use state for rotation/effects
-    handleClick() {
-        return (<a href={spartanLogo}>
-                <img src={spartanLogo} className="topLogo2" alt="logo" onClick={this.handleClick}/>
-            </a>
-        )
+    // use state for rotation/effects:
+    logoClick() {
+        // e.preventDefault(); //prevent default link behavior
+
+        //change rotation on click
+        if (this.state.spin !== 'topLogo clockwise') {
+            this.setState({spin: 'topLogo clockwise'})
+        } else {
+            this.setState({spin: 'topLogo unclockwise'})
+        }
+        console.log('logoClick:' + this.state.spin);
     }
 
     render() {
         return (
-            <a href={spartanLogo}>
-                <img src={spartanLogo} className="topLogo" alt="logo" onClick={this.handleClick}/>
+            <a href="#" onClick={this.logoClick}>
+                <img src={spartanLogo} className={this.state.spin} alt="logo"/>
             </a>
         );
     }
-
 }
+
