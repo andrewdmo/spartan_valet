@@ -10,7 +10,7 @@ export default class IndexTop extends Component {
             <div className="top">
                 <img src={spartanAptBckgrdSm} alt={'mtnApt'} className="backPic"/>
                 <Logo/>
-                <h1 className="topTitle">Spartan Trash Valet</h1>
+                <h1 className="topTitle shadow">Spartan Trash Valet</h1>
             </div>
         );
     }

@@ -1,3 +1,29 @@
+h1 {
+    /*Grows more quickly,
+    allowing for wider variation on larger screens*/
+    font-size: calc(20px + 1vw);
+}
+
+h2 {
+    /*Based on the inherited text-size,
+    and therefor growing at the same rate*/
+    font-size: 1.2em;
+}
+
+h3 {
+    /*Based on the inherited text-size,
+    and therefor growing at the same rate*/
+    font-size: 1em;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+h1, h2, p {
+    margin: 1em .2em 0 .2em;
+}
+
 .App {
     text-align: center;
 }
@@ -22,15 +48,6 @@
     color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .App {
     text-align: center;
 }
@@ -40,17 +57,66 @@
 }
 
 .backPic {
-    right: 0;
+    right: 5%;
     margin-left: 17vh;
+    width: 50vmin;
     /*margin-right: 40px;*/
     position: absolute;
+}
 
+.indexMain {
+
+}
+
+/*FASTER */
+.shade {
+    will-change: box-shadow, transition; /*keep here*/
+    box-shadow: #343434 0 0 0 0; /*psy*/
+    /*box-shadow: #8e8a2d 1vw 1vh .1vmax; !*mma*!*/
+}
+
+/*FASTER */
+.shade:hover {
+    will-change: box-shadow, transition; /*keep here*/
+
+    box-shadow: #343434 1vw 1vh 1vmin; /*psy*/
+    /*box-shadow: #343434 2vw 2vh 1vmin .1vmax; !*mma*!*/
+}
+
+.shade:active {
+    will-change: filter, drop-shadow, transition; /*keep here*/
+
+    filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
+    -webkit-filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
+}
+
+
+/*SLOWER keep small + use integers*/
+.shadow {
+    will-change: filter, drop-shadow, transiton; /*keep here*/
+
+    filter: drop-shadow(1vw 1vh #343434); /*SLOWER*/
+    -webkit-filter: drop-shadow(0 0 #343434); /*SLOWER*/
+}
+
+.shadow:hover {
+    will-change: filter, drop-shadow, transition; /*keep here*/
+
+    filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
+    -webkit-filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
+}
+
+.shadow:active {
+    will-change: filter, drop-shadow, transition; /*keep here*/
+
+    filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
+    -webkit-filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));
 }
 
 .top {
     background-color: #a1a1a1;
     height: 20vmin;
-    max-width: 80vw;
+    max-width: 85vw;
     width: 100%;
     top: 0;
     /*padding: 20px;*/
@@ -76,6 +142,7 @@
     opacity: .8;
     z-index: 7;
     transition: all 1s;
+    will-change: auto;
 }
 
 .topLogo.clockwise {
@@ -87,13 +154,20 @@
 }
 
 .topTitle {
-    border: 2px black;
-    font-size: 1.5em;
+    will-change: transform; /*keep here*/
+    margin: 1vmin;
+    font-family: "Patua One", normal, sans-serif;
+    /*font-size: 50px;*/
+    line-height: 58px;
+    letter-spacing: 0;
+    font-style: normal;
     color: #009750;
     width: 100%;
     text-align: center;
     position: absolute;
+    top: 0;
     z-index: 8;
+    transition: all 1s ease-out;
 }
 
 @keyframes App-logo-spin {

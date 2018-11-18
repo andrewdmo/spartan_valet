@@ -24,15 +24,16 @@ export default class Logo extends Component {
         } else {
             this.setState({spin: 'topLogo unclockwise'})
         }
-
     }
 
     render() {
         console.log('logoClick:' + this.state.spin);
 
+        const logoSpin = this.state.spin + ' shadow';
+
         return (
             <a href="#" onClick={this.logoClick}>
-                <img src={spartanLogo} className={this.state.spin} alt="logo"/>
+                <img src={spartanLogo} className={logoSpin} alt="logo"/>
             </a>
         );
     }
