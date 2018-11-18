@@ -14,7 +14,7 @@ export default class MapContainer extends Component {
     }
 
 //willMount??
-    componentDidMount() {
+    componentWillMount() {
 
         navigator.geolocation.getCurrentPosition((pos) => {
                 let newLat = pos.coords.latitude;
