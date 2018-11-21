@@ -13,7 +13,8 @@ export default class MapContainer extends Component {
 
     }
 
-//willMount??
+//willMount??     didUpdate?
+
     componentDidMount() {
 
         navigator.geolocation.getCurrentPosition((pos) => {
@@ -35,9 +36,24 @@ export default class MapContainer extends Component {
     };
 
 
+    // update() {
+    //     navigator.geolocation.getCurrentPosition((pos) => {
+    //         const updatedLat = pos.coords.latitude;
+    //         const updatedLng = pos.coords.longitude;
+    //         console.log('newCoords: ' + updatedLat + updatedLng);
+    //     });
+    //
+    //     // Typical usage (don't forget to compare props):
+    //     if (navigator.geolocation.getCurrentPosition) != (this.pos)
+    //
+    //         // this.fetchData(this.state.coords);
+    //         this.setState({coords: this.state.coords})
+    //     }
+    //
+    // }
+
     render() {
         return (
-
             <Gmap coords={this.state.coords}/>
         );
     }

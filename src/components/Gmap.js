@@ -36,12 +36,12 @@ export default class Gmap extends Component {
                     center={{lat: this.props.coords.lat, lng: this.props.coords.lng}}
                     defaultZoom={11}
                     fullScreenControl={true}
-                    fullScreenControlOptions={{position: 'LEFT_BOTTOM'}}
+                    fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
                 >
                     <ExampleComponent
                         lat={this.props.coords.lat}
                         lng={this.props.coords.lng}
-                        text={'Yo current 20 is: ' + this.props.coords.lat + this.props.coords.lng}/>
+                        text={'Current coords are: ' + this.props.coords.lat.toFixed(4) + this.props.coords.lng.toFixed(4)}/>
                 </GoogleMapReact>
             </div>
         );
