@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import spartanLogo from '../assets/spartanLogo.png';
+import MapContainer from '../containers/Map.container';
 
 export default class Logo extends Component {
     constructor(props) {
@@ -24,6 +25,8 @@ export default class Logo extends Component {
         } else {
             this.setState({spin: 'topLogo unclockwise'})
         }
+        let a = MapContainer; //think updates location (vs full refresh)
+        console.log(a);
     }
 
     render() {
