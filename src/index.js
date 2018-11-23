@@ -5,6 +5,8 @@ import {Provider} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
 import ConnectedRouter from 'connected-react-router';
 import {store, history} from './redux/configureStore';
+import * as mongoose from "mongoose";
+
 
 import './index.css';
 

@@ -1,5 +1,7 @@
 // https://github.com/dbjsdev/reactnodedemo/blob/master/server/app.js#L6
 
+const cors = require('cors');
+
 const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
@@ -12,8 +14,8 @@ const port = 1235;
 // app.get('/', (req, res) => res.send('Hello World!'));
 
 
-// app.use(cors());
-// app.options('*', cors());
+app.use(cors());
+app.options('*', cors());
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +40,8 @@ mongoose.connect(url, function (err) {
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongoose connection error:'));
 db.once('open', function () {
-console.log('db open')}
+        console.log('db open')
+    }
 );
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

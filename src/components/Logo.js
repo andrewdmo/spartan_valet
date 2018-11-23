@@ -25,7 +25,7 @@ export default class Logo extends Component {
         } else {
             this.setState({spin: 'topLogo unclockwise'})
         }
-        let a = MapContainer; //think updates location (vs full refresh)
+        let a = MapContainer.update; //update location (vs full refresh)
         console.log(a);
     }
 
@@ -41,4 +41,3 @@ export default class Logo extends Component {
         );
     }
 }
-

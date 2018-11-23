@@ -11,6 +11,7 @@ export default class MapContainer extends Component {
 
         console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
+        this.update = this.update.bind(this);
     }
 
 //willMount??     didUpdate?
@@ -36,21 +37,25 @@ export default class MapContainer extends Component {
     };
 
 
-    // update() {
-    //     navigator.geolocation.getCurrentPosition((pos) => {
-    //         const updatedLat = pos.coords.latitude;
-    //         const updatedLng = pos.coords.longitude;
-    //         console.log('newCoords: ' + updatedLat + updatedLng);
-    //     });
-    //
-    //     // Typical usage (don't forget to compare props):
-    //     if (navigator.geolocation.getCurrentPosition) != (this.pos)
-    //
-    //         // this.fetchData(this.state.coords);
-    //         this.setState({coords: this.state.coords})
-    //     }
-    //
-    // }
+    update() {
+
+        navigator.geolocation.getCurrentPosition((pos) => {
+                let newLat = pos.coords.latitude;
+                let newLng = pos.coords.longitude;
+                console.log('newUpdatedLat: ' + newLat);
+                this.setState({coords: {lat: newLat, lng: newLng}});
+                console.log('updatedLoLat: ' + this.state.coords.lat);
+            },
+            (err) => {
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            }, {
+                enableHighAccuracy: true,
+                timeout:
+                    60000,
+                maximumAge:
+                    0
+            });
+    };
 
     render() {
         return (
