@@ -25,9 +25,8 @@ const ExampleComponent = ({text}) => (
 
 export default class Gmap extends Component {
 
-
     render() {
-        console.log('props.lat:' + this.props.coords.lat);
+        console.log('state.lat:' + this.props.coords.lat);
         return (
 
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>

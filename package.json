@@ -21,6 +21,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
+    "dev": "cd server && nodemon server.js",
     "server": "cd server && node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

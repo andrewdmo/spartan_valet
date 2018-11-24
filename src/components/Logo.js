@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import spartanLogo from '../assets/spartanLogo.png';
-import MapContainer from '../containers/Map.container';
+import MapContainer from "../containers/Map.container";
 
 export default class Logo extends Component {
     constructor(props) {
@@ -10,14 +10,25 @@ export default class Logo extends Component {
             spin: 'topLogo clockwise', //todo: cleanup vars
         };
 
+
         // This binding is necessary to make `this` work in the callback
         this.logoClick = this.logoClick.bind(this);
     }
 
 
     // use state for rotation/effects:
-    logoClick() {
+    logoClick = (e) => {
         // e.preventDefault(); //prevent default link behavior
+
+        MapContainer.forceUpdate = (e) => {
+        };
+
+
+        // console.log('updateLat: ' + this.update.coords.lat);
+        // let a = update;
+        //update location (vs full refresh)
+        // console.log('update: ' + update);
+
 
         //change rotation on click
         if (this.state.spin !== 'topLogo clockwise') {
@@ -25,9 +36,8 @@ export default class Logo extends Component {
         } else {
             this.setState({spin: 'topLogo unclockwise'})
         }
-        let a = MapContainer.update; //update location (vs full refresh)
-        console.log(a);
-    }
+
+    };
 
     render() {
         console.log('logoClick:' + this.state.spin);
@@ -35,9 +45,7 @@ export default class Logo extends Component {
         const logoSpin = this.state.spin + ' shadow';
 
         return (
-            <a href="#" onClick={this.logoClick}>
-                <img src={spartanLogo} className={logoSpin} alt="logo"/>
-            </a>
+            <img src={spartanLogo} className={logoSpin} onClick={this.logoClick} alt="logo"/>
         );
     }
 }

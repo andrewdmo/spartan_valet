@@ -32,10 +32,14 @@ app.use(helmet());
 
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
 
+
 mongoose.connect(url, function (err) {
     if (err) throw err;
     console.log('Mongoose connected');
 });
+
+mongoose.Promise = global.Promise;
+
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongoose connection error:'));
