@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react';
 
 // from: https://www.npmjs.com/package/google-map-react
 // this is the 'circle' in middle of map
-const ExampleComponent = ({text}) => (
+const ExampleComponent = ({message}) => (
     <div style={{
         color: 'white',
         border: '10px',
@@ -18,17 +18,56 @@ const ExampleComponent = ({text}) => (
         borderRadius: '100%',
         transform: 'translate(-50%, -50%)'
     }}>
-        {text}
+        {message}
     </div>
 );
 
 
 export default class Gmap extends Component {
 
-    render() {
-        console.log('state.lat:' + this.props.coords.lat);
-        return (
+    constructor(props) {
+        super(props);
 
+        // this.setState((state, props) => ({
+        //     counter: state.counter + props.increment
+        // }));
+
+
+        this.state = {message: 'Current coords are: '};
+
+
+        // Stackoverflow:
+        // state = {
+        //     x: this.props.initialX,
+        //     // You can even call functions and class methods:
+        //     y: this.someMethod(this.props.initialY),
+        // };
+// OR
+//         this.state = {
+//             x: props.initialX
+//         };
+    }
+
+    componentDidMount() {
+
+        if (this.props.newMessage === true) {
+
+            this.setState({message: ('updated Coords: ')});
+        }
+    }
+
+
+    render() {
+
+        const message = this.state.message + this.props.coords.lat.toFixed(4) + this.props.coords.lng.toFixed(4);
+
+        console.log(message);
+
+        const lat = this.props.coords.lat;
+        const lng = this.props.coords.lng;
+
+
+        return (
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
@@ -38,12 +77,11 @@ export default class Gmap extends Component {
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
                 >
                     <ExampleComponent
-                        lat={this.props.coords.lat}
-                        lng={this.props.coords.lng}
-                        text={'Current coords are: ' + this.props.coords.lat.toFixed(4) + this.props.coords.lng.toFixed(4)}/>
+                        lat={lat}
+                        lng={lng}
+                        message={message}/>
                 </GoogleMapReact>
             </div>
         );
-
     }
 }

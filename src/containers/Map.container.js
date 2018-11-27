@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Gmap from '../components/Gmap';
+import GoogleMapReact from "google-map-react";
 
 export default class MapContainer extends Component {
 
@@ -7,9 +8,14 @@ export default class MapContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {coords: {lat: 35.55951, lng: -82.5515, zoom: 11}, updated: false};
+        this.state = {
+            coords: {lat: 35.55951, lng: -82.5515, zoom: 11},
+            updated: false,
+            // message: '',
+            newMessage: false,
+        };
 
-        console.log('this.state.coords.lat: ' + this.state.coords.lat);
+        // console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
         // this.update = this.update.bind(this);
     }
@@ -27,6 +33,7 @@ export default class MapContainer extends Component {
             },
             (err) => {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
+                this.setState({message: err.message, newMessage: true})
             }, {
                 enableHighAccuracy: true,
                 timeout:
@@ -54,10 +61,13 @@ export default class MapContainer extends Component {
 
                 if (pos.coords !== this.state.coords) {
                     this.setState({coords: {lat: updateLat, lng: updateLng}, updated: true});
+                } else {
+
                 }
             },
             (err) => {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
+                this.setState({message: err.message, newMessage: true});
 
             }, {
                 enableHighAccuracy: true,
@@ -68,35 +78,13 @@ export default class MapContainer extends Component {
             })
     }
 
-    // return {coords: {lat: updatedLat, lng: updatedLng}};
-
-
-    // console.log('update: ' + update);
-
-
-    // navigator.geolocation.getCurrentPosition((pos) => {
-    //         let newLat = pos.coords.latitude;
-    //         let newLng = pos.coords.longitude;
-    //         console.log('newUpdatedLat: ' + newLat);
-    //         this.setState({coords: {lat: newLat, lng: newLng}});
-    //         console.log('updatedLoLat: ' + this.state.coords.lat);
-    //     },
-    //     (err) => {
-    //         console.warn(`ERROR(${err.code}): ${err.message}`);
-    //     }, {
-    //         enableHighAccuracy: true,
-    //         timeout:
-    //             60000,
-    //         maximumAge:
-    //             0
-    //     });
-
-
     render() {
         return (
             <Gmap
                 coords={this.state.coords}
                 updated={this.state.updated}
+                // message={this.state.message}
+                newMessage={this.state.newMessage}
             />
         );
     }

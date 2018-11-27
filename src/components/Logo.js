@@ -21,6 +21,7 @@ export default class Logo extends Component {
         // e.preventDefault(); //prevent default link behavior
 
         MapContainer.forceUpdate = (e) => {
+            console.log('forceUpdate e: ' + e);
         };
 
 
