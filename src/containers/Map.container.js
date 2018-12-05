@@ -42,13 +42,12 @@ export default class MapContainer extends Component {
                     0
             });
 
-        // fetch('/api/counters', { method: 'POST' })
-        //     .then(res => res.json())
-        //     .then(json => {
-        //         this.setState({
-        //             counters: json
-        //         });
-        //     });
+        // try {
+        //     fetch('/api/coords')
+        //         .then(res => res.json())
+        // } catch {
+        //     console.log('no prev coords found')
+        // }
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -75,7 +74,16 @@ export default class MapContainer extends Component {
                     60000,
                 maximumAge:
                     0
-            })
+            });
+
+        fetch('https://localhost:1235/api/coords')
+            .then(res => res.json())
+            .then(this.setState({
+                updated: true
+            }));
+
+        console.log('updated: ' + this.state.updated);
+
     }
 
     render() {
