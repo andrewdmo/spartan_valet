@@ -61,21 +61,20 @@ export default class Gmap extends Component {
 
         const message = this.state.message + this.props.coords.lat.toFixed(4) + this.props.coords.lng.toFixed(4);
 
-        console.log(message);
+        // console.log(message);
 
         const lat = this.props.coords.lat;
         const lng = this.props.coords.lng;
 
 
         return (
-            <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
+            <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0, transition: 'all 1s'}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
                     center={{lat: this.props.coords.lat, lng: this.props.coords.lng}}
                     defaultZoom={11}
                     fullScreenControl={true}
-                    fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
-                >
+                    fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}>
                     <ExampleComponent
                         lat={lat}
                         lng={lng}
