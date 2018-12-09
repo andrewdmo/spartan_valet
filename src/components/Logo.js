@@ -17,7 +17,7 @@ export default class Logo extends Component {
 
 
     // use state for rotation/effects:
-    logoClick = (e) => {
+    logoClick = () => {
         // e.preventDefault(); //prevent default link behavior
 
         MapContainer.forceUpdate = (e) => {

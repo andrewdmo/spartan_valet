@@ -16,6 +16,7 @@ const ExampleComponent = ({message}) => (
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '100%',
+        transition: 'all 1s',
         transform: 'translate(-50%, -50%)'
     }}>
         {message}
@@ -33,7 +34,9 @@ export default class Gmap extends Component {
         // }));
 
 
-        this.state = {message: 'Current coords are: '};
+        this.state = {message: 'Current coords are: ', updated: this.props.updated};
+        console.log('props.updated: ' + this.props.updated);
+        console.log('state.updated: ' + this.state.updated);
 
 
         // Stackoverflow:
@@ -48,11 +51,11 @@ export default class Gmap extends Component {
 //         };
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
 
-        if (this.props.newMessage === true) {
+        if (this.state.updated === true) {
 
-            this.setState({message: ('updated Coords: ')});
+            this.setState({message: ('updated Coords: ')}); //TODO not working
         }
     }
 
@@ -68,7 +71,7 @@ export default class Gmap extends Component {
 
 
         return (
-            <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0, transition: 'all 1s'}}>
+            <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
                     center={{lat: this.props.coords.lat, lng: this.props.coords.lng}}
