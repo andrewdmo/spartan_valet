@@ -9,7 +9,7 @@ export default class MapContainer extends Component {
         super(props);
 
         this.state = {
-            coords: {lat: 35.55951, lng: -82.5515, zoom: 11},
+            coords: {latitude: 35.55951, longitude: -82.5515, zoom: 11},
             updated: false,
             lastTime: new Date(),
             // message: '',
@@ -19,7 +19,8 @@ export default class MapContainer extends Component {
 
         // console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
-        // this.update = this.update.bind(this);
+        this.tick = this.tick.bind(this);
+        this.update = this.update.bind(this);
     }
 
 //willMount??     didUpdate?
@@ -28,27 +29,13 @@ export default class MapContainer extends Component {
 
         this.interval = setInterval(() => this.tick(), 10000); //in ms
 
-        navigator.geolocation.getCurrentPosition((pos) => {
-                let newLat = pos.coords.latitude;
-                let newLng = pos.coords.longitude;
-                let newTime = new Date().toLocaleTimeString(); //doesn't include Date
-                this.setState({coords: {lat: newLat, lng: newLng}, lastTime: newTime, updated: true});
-                console.log('newLat: ' + newLat);
-                console.log('newLng: ' + newLng);
-                console.log('newTime: ' + newTime);
-                return pos;
-            },
-            (err) => {
-                console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
-                this.setState({message: err.message})
-            }, {
-                enableHighAccuracy: true,
-                timeout:
-                    5000,
-                maximumAge:
-                    0
-            }
-        );
+        console.log(this.update.coords);
+
+        this.setState({
+            coords: this.update.coords,
+            lastTime: new Date().toLocaleTimeString(),
+            updated: true
+        });
 
         fetch('https://localhost:1235/api/coords')
             .then(res => res.json())
@@ -66,62 +53,18 @@ export default class MapContainer extends Component {
                             this.setState({
                                 updated: true
                             });
-                        });
-                } else {
-                    console
-                        .log(
-                            'Coords not updated'
-                        )
+                        })
                 }
-            });
+            })
 
+            .catch(error => console.log('Coords not updated: ' + error));
+    }
 
-// fetch('https://localhost:1235/api/coords', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     }
-// })
-//     .req.post()
-//     .then(res => res.json())
-//     .then(this.setState({
-//         updated: true
-//     }));
-
-
-// fetch('https://localhost:1235/api/coords')
-//     .then(res => res.json())
-//     .then(this.setState({
-//         updated: true
-//     }));
-
-
-// try {
-//     fetch('/api/coords')
-//         .then(res => res.json())
-// } catch {
-//     console.log('no prev coords found')
-// }
-
-    };
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
+    update = () => {
         navigator.geolocation.getCurrentPosition((pos) => {
-                let updateLat = pos.coords.latitude;
-                let updateLng = pos.coords.longitude;
-                let updatedTime = new Date().toLocaleTimeString();
                 // this.setState({coords: {updateLat, updateLng}});
-
-                if (pos.coords !== this.state.coords) {
-                    this.setState({coords: {lat: updateLat, lng: updateLng}, lastTime: updatedTime, updated: true});
-                    // console.log('updateLat: ' + updateLat);
-                    // console.log('updateLng: ' + updateLng);
-                    console.log('updatedTime: ' + updatedTime);
-                    console.log('state.updated: ' + this.state.updated);
-                } else {
-
-                }
+                console.log(pos);
+                this.setState({coords: pos.coords});
             },
             (err) => {
                 console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
@@ -130,10 +73,33 @@ export default class MapContainer extends Component {
             }, {
                 enableHighAccuracy: true,
                 timeout:
-                    60000,
+                    10000,
                 maximumAge:
                     0
             });
+
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot, pos) {
+
+        // let updatedCoords = this.update();
+
+        // let updateLat = pos.coords.latitude;
+        // let updateLng = pos.coords.longitude;
+        let updatedTime = new Date().toLocaleTimeString();
+
+        if (this.state.coords !== prevState.coords) {
+            this.setState({
+                coords: this.state.coords,
+                lastTime: new Date().toLocaleTimeString(),
+                updated: true
+            });
+            // console.log('updateLat: ' + updateLat);
+            // console.log('updateLng: ' + updateLng);
+        }
+        console.log('updatedTime: ' + updatedTime);
+        console.log('updatedCoords: ' + this.state.coords);
+
         //
         // fetch('https://localhost:1235/api/coords')
         //     .then(res => res.json())
@@ -149,6 +115,7 @@ export default class MapContainer extends Component {
         clearInterval(this.interval);
     }
 
+
     tick() {
         this.setState(prevState => ({
             seconds: prevState.seconds + 1
@@ -160,6 +127,7 @@ export default class MapContainer extends Component {
             <Gmap
                 coords={this.state.coords}
                 updated={this.state.updated}
+                lastTime={this.state.lastTime}
                 // message={this.state.message}
                 newMessage={this.state.newMessage} //redundant
             />

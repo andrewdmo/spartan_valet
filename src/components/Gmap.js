@@ -34,9 +34,8 @@ export default class Gmap extends Component {
         // }));
 
 
-        this.state = {message: 'Current coords are: ', updated: this.props.updated};
+        this.state = {message: 'Current coords are: ', coords: this.props.coords, updated: this.props.updated};
         console.log('props.updated: ' + this.props.updated);
-        console.log('state.updated: ' + this.state.updated);
 
 
         // Stackoverflow:
@@ -53,6 +52,10 @@ export default class Gmap extends Component {
 
     componentDidUpdate() {
 
+        // this.setState({updated: this.props.updated});
+        // console.log('state.updated: ' + this.state.updated);
+
+
         if (this.state.updated === true) {
 
             this.setState({message: ('updated Coords: ')}); //TODO not working
@@ -62,25 +65,25 @@ export default class Gmap extends Component {
 
     render() {
 
-        const message = this.state.message + this.props.coords.lat.toFixed(4) + this.props.coords.lng.toFixed(4);
+        const message = this.state.message + this.state.coords.latitude + this.state.coords.longitude;
 
         // console.log(message);
 
-        const lat = this.props.coords.lat;
-        const lng = this.props.coords.lng;
+        // const lat = this.props.coords.lat;
+        // const lng = this.props.coords.lng;
 
 
         return (
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
-                    center={{lat: this.props.coords.lat, lng: this.props.coords.lng}}
+                    center={{lat: this.state.coords.latitude, lng: this.state.coords.longitude}}
                     defaultZoom={11}
                     fullScreenControl={true}
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}>
                     <ExampleComponent
-                        lat={lat}
-                        lng={lng}
+                        lat={this.state.coords.latitude}
+                        lng={this.state.coords.longitude}
                         message={message}/>
                 </GoogleMapReact>
             </div>

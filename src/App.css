@@ -140,7 +140,7 @@ h1, h2, p {
     left: 5vw;
     top: 5vh;
     opacity: .8;
-    z-index: 7;
+    z-index: 8;
     transition: all 1s;
     will-change: auto;
 }
@@ -166,7 +166,7 @@ h1, h2, p {
     text-align: center;
     position: absolute;
     top: 0;
-    z-index: 8;
+    z-index: 7;
     transition: all 1s ease-out;
 }
 
