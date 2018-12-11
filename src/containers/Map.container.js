@@ -9,7 +9,7 @@ export default class MapContainer extends Component {
         super(props);
 
         this.state = {
-            coords: {latitude: 35.55951, longitude: -82.5515, zoom: 11},
+            coords: {latitude: 35.5595, longitude: -82.5515, zoom: 11},
             updated: false,
             lastTime: new Date(),
             // message: '',
@@ -20,52 +20,56 @@ export default class MapContainer extends Component {
         // console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
         this.tick = this.tick.bind(this);
-        this.update = this.update.bind(this);
+        this.updatePos = this.updatePos.bind(this);
     }
 
 //willMount??     didUpdate?
 
     componentDidMount() {
 
-        this.interval = setInterval(() => this.tick(), 10000); //in ms
+        //TODO turn back on:
+        // this.interval = setInterval(() => this.tick(), 10000); //in ms
 
-        console.log(this.update.coords);
 
         this.setState({
-            coords: this.update.coords,
+            coords: this.updatePos.coords,
             lastTime: new Date().toLocaleTimeString(),
             updated: true
         });
 
-        fetch('https://localhost:1235/api/coords')
-            .then(res => res.json())
-            .then(json => {
-                if (json.coords !== this.state.coords) {
-                    console.log('json.coords: ' + json.coords);
-                    console.log('state.coords: ' + this.state.coords);
+        console.log('compDidMount.coords: ' + this.state.coords);
 
-                    fetch('/api/coords', {method: 'POST'})
-                        .then(res => res.json())
-                        .then(json => {
-                            let coords = this.state.coords;
-                            coords.push(json);
-                            console.log('DB updated');
-                            this.setState({
-                                updated: true
-                            });
-                        })
-                }
-            })
 
-            .catch(error => console.log('Coords not updated: ' + error));
+        // fetch('https://localhost:1235/api/coords')
+        //     .then(res => res.json())
+        //     .then(json => {
+        //         if (json.coords !== this.state.coords) {
+        //             console.log('json.coords: ' + json.coords);
+        //             console.log('state.coords: ' + this.state.coords);
+        //
+        //             fetch('/api/coords', {method: 'POST'})
+        //                 .then(res => res.json())
+        //                 .then(json => {
+        //                     let coords = this.state.coords;
+        //                     coords.push(json);
+        //                     console.log('DB updated');
+        //                     this.setState({
+        //                         updated: true
+        //                     });
+        //                 })
+        //         }
+        //     })
+        //     .catch(error => console.log('DB: Coords not updated: ' + error));
     }
 
-    update = () => {
-        navigator.geolocation.getCurrentPosition((pos) => {
-                // this.setState({coords: {updateLat, updateLng}});
-                console.log(pos);
-                this.setState({coords: pos.coords});
+    updatePos = () => {
+        return navigator.geolocation.getCurrentPosition((pos) => {
+
+                console.log('UPDATE pos: ' + pos);
+                // this.setState({coords: pos.coords});
+                return pos;
             },
+
             (err) => {
                 console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
                 this.setState({message: err.message, newMessage: true});
@@ -76,28 +80,29 @@ export default class MapContainer extends Component {
                     10000,
                 maximumAge:
                     0
-            });
-
+            })
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot, pos) {
 
-        // let updatedCoords = this.update();
+    componentDidUpdate(prevProps, prevState, snapshot) {
 
-        // let updateLat = pos.coords.latitude;
-        // let updateLng = pos.coords.longitude;
-        let updatedTime = new Date().toLocaleTimeString();
 
-        if (this.state.coords !== prevState.coords) {
+        // let updatedPos = this.updatePos;
+
+        // console.log(updatedPos);
+
+
+        if (this.updatePos.coords !== prevState.coords) {
             this.setState({
-                coords: this.state.coords,
+                coords: this.updatePos.coords,
                 lastTime: new Date().toLocaleTimeString(),
                 updated: true
             });
-            // console.log('updateLat: ' + updateLat);
-            // console.log('updateLng: ' + updateLng);
+            // console.log('updatedTime: ' + this.state.lastTime);
+            // console.log('updatedCoords: ' + this.state.coords);
         }
-        console.log('updatedTime: ' + updatedTime);
+
+        console.log('updatedTime: ' + this.state.lastTime);
         console.log('updatedCoords: ' + this.state.coords);
 
         //
@@ -109,6 +114,7 @@ export default class MapContainer extends Component {
         //
         // console.log('updated: ' + this.state.updated);
 
+        console.log('seconds: ' + this.state.seconds)
     }
 
     componentWillUnmount() {

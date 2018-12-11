@@ -25,10 +25,10 @@ export default class Logo extends Component {
         };
 
 
-        // console.log('updateLat: ' + this.update.coords.lat);
-        // let a = update;
-        //update location (vs full refresh)
-        // console.log('update: ' + update);
+        // console.log('updateLat: ' + this.updatePos.coords.lat);
+        // let a = updatePos;
+        //updatePos location (vs full refresh)
+        // console.log('updatePos: ' + updatePos);
 
 
         //change rotation on click
