@@ -50,6 +50,11 @@ export default class Gmap extends Component {
 //         };
     }
 
+    componentDidMount() {
+        // this.setState({message: 'Current coords are: ', coords: this.props.coords, updated: this.props.updated});
+        // console.log('props.updated: ' + this.props.updated);
+    }
+
     componentDidUpdate() {
 
         // this.setState({updated: this.props.updated});
@@ -65,7 +70,7 @@ export default class Gmap extends Component {
 
     render() {
 
-        const message = this.state.message + this.state.coords.latitude + this.state.coords.longitude;
+        const message = this.state.message + this.props.coords.latitude + this.props.coords.longitude;
 
         // console.log(message);
 
