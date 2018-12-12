@@ -26,51 +26,13 @@ const ExampleComponent = ({message}) => (
 
 export default class Gmap extends Component {
 
-    constructor(props) {
-        super(props);
-
-        // this.setState((state, props) => ({
-        //     counter: state.counter + props.increment
-        // }));
-
-
-        this.state = {message: 'Current coords are: ', coords: this.props.coords, updated: this.props.updated};
-        console.log('props.updated: ' + this.props.updated);
-
-
-        // Stackoverflow:
-        // state = {
-        //     x: this.props.initialX,
-        //     // You can even call functions and class methods:
-        //     y: this.someMethod(this.props.initialY),
-        // };
-// OR
-//         this.state = {
-//             x: props.initialX
-//         };
-    }
-
-    componentDidMount() {
-        // this.setState({message: 'Current coords are: ', coords: this.props.coords, updated: this.props.updated});
-        // console.log('props.updated: ' + this.props.updated);
-    }
-
-    componentDidUpdate() {
-
-        // this.setState({updated: this.props.updated});
-        // console.log('state.updated: ' + this.state.updated);
-
-
-        if (this.state.updated === true) {
-
-            this.setState({message: ('updated Coords: ')}); //TODO not working
-        }
-    }
-
 
     render() {
 
-        const message = this.state.message + this.props.coords.latitude + this.props.coords.longitude;
+        console.log('props.updated: ' + this.props.updated);
+        console.log('props.lastTime: ' + this.props.lastTime);
+
+        // const message = this.state.message + this.props.coords.latitude + this.props.coords.longitude;
 
         // console.log(message);
 
@@ -82,14 +44,14 @@ export default class Gmap extends Component {
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
-                    center={{lat: this.state.coords.latitude, lng: this.state.coords.longitude}}
+                    center={{lat: this.props.coords.latitude, lng: this.props.coords.longitude}}
                     defaultZoom={11}
                     fullScreenControl={true}
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}>
                     <ExampleComponent
-                        lat={this.state.coords.latitude}
-                        lng={this.state.coords.longitude}
-                        message={message}/>
+                        lat={this.props.coords.latitude}
+                        lng={this.props.coords.longitude}
+                        message={this.props.message + '\n' + this.props.coords.latitude + '\n' + this.props.coords.longitude + '\n' + this.props.lastTime.toLocaleTimeString()}/>
                 </GoogleMapReact>
             </div>
         );

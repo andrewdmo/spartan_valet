@@ -12,7 +12,7 @@ export default class MapContainer extends Component {
             coords: {latitude: 35.5595, longitude: -82.5515, zoom: 11},
             updated: false,
             lastTime: new Date(),
-            // message: '',
+            message: 'Default coords are: \n',
             newMessage: false,
             seconds: 0
         };
@@ -20,7 +20,7 @@ export default class MapContainer extends Component {
         // console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
         this.tick = this.tick.bind(this);
-        this.updatePos = this.updatePos.bind(this);
+        // this.updatePos = this.updatePos.bind(this);
     }
 
 //willMount??     didUpdate?
@@ -31,28 +31,29 @@ export default class MapContainer extends Component {
         // this.interval = setInterval(() => this.tick(), 10000); //in ms
 
 
-        this.setState({
-            coords: navigator.geolocation.getCurrentPosition((pos) => {
+        navigator.geolocation.getCurrentPosition((pos) => {
 
-                    console.log('UPDATE pos: ' + pos.coords);
-                    this.setState({coords: pos.coords});
-                    console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude)
-                },
 
-                (err) => {
-                    console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
-                    this.setState({message: err.message, newMessage: true});
+                this.setState({
+                    coords: pos.coords, lastTime: new Date(), updated: true, message: 'Updated coords are: \n'
+                });
 
-                }, {
-                    enableHighAccuracy: true,
-                    timeout:
-                        3000,
-                    maximumAge:
-                        0
-                }),
-            lastTime: new Date().toLocaleTimeString(),
-            updated: true
-        });
+
+                console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
+            },
+
+            (err) => {
+                console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
+                this.setState({message: 'GeoLocationError: ' + err.message, updated: false});
+
+            }, {
+                enableHighAccuracy: true,
+                timeout:
+                    10000,
+                maximumAge:
+                    0
+            })
+        ;
 
 
         // fetch('https://localhost:1235/api/coords')
@@ -77,31 +78,58 @@ export default class MapContainer extends Component {
         //     .catch(error => console.log('DB: Coords not updated: ' + error));
     }
 
-    updatePos = () => {
-        navigator.geolocation.getCurrentPosition((pos) => {
-
-                console.log('UPDATE pos: ' + pos);
-                // this.setState({coords: pos.coords});
-                this.componentDidUpdate(pos);
-            },
-
-            (err) => {
-                console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
-                this.setState({message: err.message, newMessage: true});
-
-            }, {
-                enableHighAccuracy: true,
-                timeout:
-                    7000,
-                maximumAge:
-                    0
-            })
-    };
+    // updatePos = () => {
+    //     navigator.geolocation.getCurrentPosition((pos) => {
+    //
+    //             console.log('UPDATE pos: ' + pos);
+    //             // this.setState({coords: pos.coords});  CONSIDER
+    //             // this.componentDidUpdate(pos);
+    //
+    //         },
+    //
+    //         (err) => {
+    //             console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
+    //             this.setState({message: 'error: ' + err.message, updated: true});
+    //
+    //         }, {
+    //             enableHighAccuracy: true,
+    //             timeout:
+    //                 7000,
+    //             maximumAge:
+    //                 0
+    //         })
+    // };
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
 
+        navigator.geolocation.getCurrentPosition((pos) => {
+                console.log('pos ' + pos.coords.latitude + 'prevState: ' + prevState.coords.latitude);
+
+                console.log();
+                if (pos.coords !== prevState.coords) {
+                    this.setState({coords: pos.coords, lastTime: new Date()});
+                    console.log('UPDATE x2: ' + pos.coords.latitude); //leave here to verify call
+
+                } else {
+                    this.setState({lastTime: new Date()});
+                    console.log('NO new coords'); //leave here to verify call
+                }
+            },
+
+            (err) => {
+                console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
+                this.setState({message: 'GeoLocationError: ' + err.message});
+
+            }, {
+                enableHighAccuracy: true,
+                timeout:
+                    60000,
+                maximumAge:
+                    0
+            }
+        )
     }
 
     componentWillUnmount() {
@@ -116,13 +144,14 @@ export default class MapContainer extends Component {
     }
 
     render() {
+        // console.log('MC Render state.coords.lat: ' + this.state.coords.latitude);
         return (
             <Gmap
                 coords={this.state.coords}
                 updated={this.state.updated}
                 lastTime={this.state.lastTime}
-                // message={this.state.message}
-                newMessage={this.state.newMessage} //redundant
+                message={this.state.message}
+                // newMessage={this.state.newMessage} //redundant
             />
         );
     }
