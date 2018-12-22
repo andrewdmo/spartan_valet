@@ -38,8 +38,7 @@ export default class MapContainer extends Component {
                     coords: pos.coords, lastTime: new Date(), updated: true, message: 'Updated coords are: \n'
                 });
 
-
-                console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
+                // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
             },
 
             (err) => {
@@ -56,26 +55,26 @@ export default class MapContainer extends Component {
         ;
 
 
-        // fetch('https://localhost:1235/api/coords')
-        //     .then(res => res.json())
-        //     .then(json => {
-        //         if (json.coords !== this.state.coords) {
-        //             console.log('json.coords: ' + json.coords);
-        //             console.log('state.coords: ' + this.state.coords);
-        //
-        //             fetch('/api/coords', {method: 'POST'})
-        //                 .then(res => res.json())
-        //                 .then(json => {
-        //                     let coords = this.state.coords;
-        //                     coords.push(json);
-        //                     console.log('DB updated');
-        //                     this.setState({
-        //                         updated: true
-        //                     });
-        //                 })
-        //         }
-        //     })
-        //     .catch(error => console.log('DB: Coords not updated: ' + error));
+        fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
+            .then(res => res.json())
+            .then(json => {
+                if (json.currentCoords.latitude !== this.state.coords.latitude || json.currentCoords.longitude !== this.state.coords.longitude) {
+                    console.log('json.coords: ' + json.coords);
+                    console.log('state.coords: ' + this.state.coords);
+
+                    fetch('http://localhost:1235/api/coords', {method: 'POST'})
+                        .then(res => res.json())
+                        .then(json => {
+                            let coords = this.state.coords;
+                            coords.push(json);
+                            console.log('DB updated');
+                            this.setState({
+                                updated: true
+                            });
+                        })
+                }
+            })
+            .catch(error => console.log('DB: Coords not updated: ' + error));
     }
 
     // updatePos = () => {
@@ -108,13 +107,13 @@ export default class MapContainer extends Component {
                 console.log('pos ' + pos.coords.latitude + 'prevState: ' + prevState.coords.latitude);
 
                 console.log();
-                if (pos.coords !== prevState.coords) {
+                if (pos.coords.latitude !== prevState.coords.latitude || pos.coords.longitude !== prevState.coords.longitude) {
                     this.setState({coords: pos.coords, lastTime: new Date()});
                     console.log('UPDATE x2: ' + pos.coords.latitude); //leave here to verify call
 
                 } else {
-                    this.setState({lastTime: new Date()});
-                    console.log('NO new coords'); //leave here to verify call
+                    // this.setState({lastTime: new Date()});
+                    console.log('NO new coords @ ' + new Date().toLocaleTimeString()); //leave here to verify call
                 }
             },
 

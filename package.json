@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "connected-react-router": "^5.0.1",
-    "cors": "^2.8.5",
     "express": "^4.16.4",
     "google-map-react": "^1.1.0",
     "helmet": "^3.15.0",

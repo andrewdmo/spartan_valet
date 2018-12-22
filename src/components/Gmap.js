@@ -29,8 +29,8 @@ export default class Gmap extends Component {
 
     render() {
 
-        console.log('props.updated: ' + this.props.updated);
-        console.log('props.lastTime: ' + this.props.lastTime);
+        // console.log('props.updated: ' + this.props.updated);
+        // console.log('props.lastTime: ' + this.props.lastTime);
 
         // const message = this.state.message + this.props.coords.latitude + this.props.coords.longitude;
 
@@ -51,7 +51,7 @@ export default class Gmap extends Component {
                     <ExampleComponent
                         lat={this.props.coords.latitude}
                         lng={this.props.coords.longitude}
-                        message={this.props.message + '\n' + this.props.coords.latitude + '\n' + this.props.coords.longitude + '\n' + this.props.lastTime.toLocaleTimeString()}/>
+                        message={this.props.message + '\n' + this.props.coords.latitude.toFixed(4) + '\n' + this.props.coords.longitude.toFixed(4) + '\n' + this.props.lastTime.toLocaleTimeString()}/>
                 </GoogleMapReact>
             </div>
         );
