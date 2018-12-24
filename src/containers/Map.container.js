@@ -31,6 +31,7 @@ export default class MapContainer extends Component {
         // this.interval = setInterval(() => this.tick(), 10000); //in ms
 
 
+        //REPORT LOCAL GEOLO & SET STATE:
         navigator.geolocation.getCurrentPosition((pos) => {
 
 
@@ -54,6 +55,20 @@ export default class MapContainer extends Component {
             })
         ;
 
+//GET DB COORDS & 
+        fetch('http://localhost:1235/api/coords', {mode: 'no-cors', method: 'POST'})
+            .then(res => res.json())
+            .then(json => {
+                let coords = this.state.coords;
+                coords.push(json);
+                console.log('DB updated');
+                this.setState({
+                    updated: true
+                })
+
+            })
+            .catch(error => console.log('Coords NOT POSTED: ' + error));
+
 
         fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
             .then(res => res.json())
@@ -74,7 +89,7 @@ export default class MapContainer extends Component {
                         })
                 }
             })
-            .catch(error => console.log('DB: Coords not updated: ' + error));
+            .catch(error => console.log('Coords NOT FETCHED: ' + error));
     }
 
     // updatePos = () => {
