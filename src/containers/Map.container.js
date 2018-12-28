@@ -70,14 +70,30 @@ export default class MapContainer extends Component {
 //             .catch(error => console.log('Coords NOT POSTED: ' + error));
 
 
+        //TODO: delete this test model
+        fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
+            .then(res => res.json())
+            .then(json => {
+                let coords = this.state.coords;
+                coords.push(json);
+                console.log('DB updated');
+                this.setState({
+                    updated: true
+                });
+            });
+
+
         fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
             .then(res => res.json())
+            // .then(console.log(json));
+
+
             .then(json => {
                 if (json.currentCoords.latitude !== this.state.coords.latitude || json.currentCoords.longitude !== this.state.coords.longitude) {
                     console.log('json.coords: ' + json.coords);
                     console.log('state.coords: ' + this.state.coords);
 
-                    fetch('http://localhost:1235/api/coords', {method: 'POST'})
+                    fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
                         .then(res => res.json())
                         .then(json => {
                             let coords = this.state.coords;
@@ -89,6 +105,7 @@ export default class MapContainer extends Component {
                         })
                 }
             })
+
             .catch(error => console.log('Coords NOT FETCHED: ' + error))
     }
 

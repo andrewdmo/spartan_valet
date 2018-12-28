@@ -68,8 +68,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-476">
-                  <caret line="26" selection-start-line="26" selection-end-line="26" />
+                <state relative-caret-position="154">
+                  <caret line="77" column="34" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="34" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -108,8 +108,8 @@
           <file pinned="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/package.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="478">
-                  <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+                <state relative-caret-position="330">
+                  <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
                 </state>
               </provider>
             </entry>
@@ -212,7 +212,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,6 +228,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -367,12 +367,13 @@
       <workItem from="1545487841882" duration="17000" />
       <workItem from="1545660462614" duration="2959000" />
       <workItem from="1545759230452" duration="336000" />
-      <workItem from="1545920676299" duration="4320000" />
+      <workItem from="1545920676299" duration="5737000" />
+      <workItem from="1546010262049" duration="3527000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127129000" />
+    <option name="totallyTimeSpent" value="132073000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -705,15 +706,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+        <state relative-caret-position="330">
+          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-476">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="154">
+          <caret line="77" column="34" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="34" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
