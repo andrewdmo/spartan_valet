@@ -17,14 +17,3 @@ ReactDOM.render((
     ),
     document.getElementById('root')
 );
-
-{/*<ConnectedRouter history={history}>*/
-}
-{/*<Switch>*/
-}
-{/*<Route path="/" component={App}/>*/
-}
-{/*</Switch>*/
-}
-{/*</ConnectedRouter>*/
-}

@@ -80,7 +80,8 @@ export default class MapContainer extends Component {
                 this.setState({
                     updated: true
                 });
-            });
+            })
+            .catch(error => console.log('Coords NOT POSTED: ' + error));
 
 
         fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
@@ -88,23 +89,23 @@ export default class MapContainer extends Component {
             // .then(console.log(json));
 
 
-            .then(json => {
-                if (json.currentCoords.latitude !== this.state.coords.latitude || json.currentCoords.longitude !== this.state.coords.longitude) {
-                    console.log('json.coords: ' + json.coords);
-                    console.log('state.coords: ' + this.state.coords);
-
-                    fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
-                        .then(res => res.json())
-                        .then(json => {
-                            let coords = this.state.coords;
-                            coords.push(json);
-                            console.log('DB updated');
-                            this.setState({
-                                updated: true
-                            });
-                        })
-                }
-            })
+            // .then(json => {
+            //     if (json.currentCoords.latitude !== this.state.coords.latitude || json.currentCoords.longitude !== this.state.coords.longitude) {
+            //         console.log('json.coords: ' + json.coords);
+            //         console.log('state.coords: ' + this.state.coords);
+            //
+            //         fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
+            //             .then(res => res.json())
+            //             .then(json => {
+            //                 let coords = this.state.coords;
+            //                 coords.push(json);
+            //                 console.log('DB updated');
+            //                 this.setState({
+            //                     updated: true
+            //                 });
+            //             })
+            //     }
+            // })
 
             .catch(error => console.log('Coords NOT FETCHED: ' + error))
     }
