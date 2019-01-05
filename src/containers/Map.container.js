@@ -69,99 +69,59 @@ export default class MapContainer extends Component {
 //             })
 //             .catch(error => console.log('Coords NOT POSTED: ' + error));
 
+        fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
+            .then(res => res.json())
 
-        //TODO: delete this test model
+            .then(res => console.log('fetched from DB:' + res))
+
+            .catch(error => console.log('Coords NOT FETCHED from DB: ' + error)
+            );
+
+
+        //TODO: delete test model
         fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
             .then(res => res.json())
             .then(json => {
-                let coords = this.state.coords;
+                const coords = this.state.coords;
                 coords.push(json);
                 console.log('DB updated');
                 this.setState({
                     updated: true
                 });
             })
-            .catch(error => console.log('Coords NOT POSTED: ' + error));
+            .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
 
-
-        fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
-            .then(res => res.json())
-            // .then(console.log(json));
-
-
-            // .then(json => {
-            //     if (json.currentCoords.latitude !== this.state.coords.latitude || json.currentCoords.longitude !== this.state.coords.longitude) {
-            //         console.log('json.coords: ' + json.coords);
-            //         console.log('state.coords: ' + this.state.coords);
-            //
-            //         fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
-            //             .then(res => res.json())
-            //             .then(json => {
-            //                 let coords = this.state.coords;
-            //                 coords.push(json);
-            //                 console.log('DB updated');
-            //                 this.setState({
-            //                     updated: true
-            //                 });
-            //             })
-            //     }
-            // })
-
-            .catch(error => console.log('Coords NOT FETCHED: ' + error))
     }
-
-    // updatePos = () => {
-    //     navigator.geolocation.getCurrentPosition((pos) => {
-    //
-    //             console.log('UPDATE pos: ' + pos);
-    //             // this.setState({coords: pos.coords});  CONSIDER
-    //             // this.componentDidUpdate(pos);
-    //
-    //         },
-    //
-    //         (err) => {
-    //             console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
-    //             this.setState({message: 'error: ' + err.message, updated: true});
-    //
-    //         }, {
-    //             enableHighAccuracy: true,
-    //             timeout:
-    //                 7000,
-    //             maximumAge:
-    //                 0
-    //         })
-    // };
-
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
 
-        navigator.geolocation.getCurrentPosition((pos) => {
-                console.log('pos ' + pos.coords.latitude + 'prevState: ' + prevState.coords.latitude);
-
-                console.log();
-                if (pos.coords.latitude !== prevState.coords.latitude || pos.coords.longitude !== prevState.coords.longitude) {
-                    this.setState({coords: pos.coords, lastTime: new Date()});
-                    console.log('UPDATE x2: ' + pos.coords.latitude); //leave here to verify call
-
-                } else {
-                    // this.setState({lastTime: new Date()});
-                    console.log('NO new coords @ ' + new Date().toLocaleTimeString()); //leave here to verify call
-                }
-            },
-
-            (err) => {
-                console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
-                this.setState({message: 'GeoLocationError: ' + err.message});
-
-            }, {
-                enableHighAccuracy: true,
-                timeout:
-                    60000,
-                maximumAge:
-                    0
-            }
-        )
+        // navigator.geolocation.getCurrentPosition((pos) => {
+        //         console.log('pos ' + pos.coords.latitude + 'prevState: ' + prevState.coords.latitude);
+        //
+        //         console.log();
+        //         if (pos.coords.latitude !== prevState.coords.latitude || pos.coords.longitude !== prevState.coords.longitude) {
+        //             this.setState({coords: pos.coords, lastTime: new Date()});
+        //             console.log('UPDATE x2: ' + pos.coords.latitude); //leave here to verify call
+        //
+        //         } else {
+        //             // this.setState({lastTime: new Date()});
+        //             console.log('NO new coords @ ' + new Date().toLocaleTimeString()); //leave here to verify call
+        //         }
+        //     },
+        //
+        //     (err) => {
+        //         console.warn(`GeoLocationError: (${err.code}): ${err.message}`);
+        //         this.setState({message: 'GeoLocationError: ' + err.message});
+        //
+        //     }, {
+        //         enableHighAccuracy: true,
+        //         timeout:
+        //             60000,
+        //         maximumAge:
+        //             0
+        //     }
+        // )
     }
 
     componentWillUnmount() {
