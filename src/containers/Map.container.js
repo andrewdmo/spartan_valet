@@ -39,6 +39,29 @@ export default class MapContainer extends Component {
                     coords: pos.coords, lastTime: new Date(), updated: true, message: 'Updated coords are: \n'
                 });
 
+                fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
+                    .then(
+                        res => res.json
+                    )
+                    .then(coords => console.log('fetched from DB:' + {coords}
+                    ))
+                    .catch(error => console.log('Coords NOT FETCHED from DB: ' + error)
+                    );
+
+
+                //TODO: delete test model
+                fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
+                    .then(res => res.json())
+                    .then(json => {
+                        const coords = this.state.coords;
+                        coords.push(json);
+                        console.log('DB updated');
+                        this.setState({
+                            updated: true
+                        });
+                    })
+                    .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
+
                 // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
             },
 
@@ -69,27 +92,6 @@ export default class MapContainer extends Component {
 //             })
 //             .catch(error => console.log('Coords NOT POSTED: ' + error));
 
-        fetch('http://localhost:1235/api/coords', {mode: 'no-cors'}) //todo CORS back on
-            .then(res => res.json())
-
-            .then(res => console.log('fetched from DB:' + res))
-
-            .catch(error => console.log('Coords NOT FETCHED from DB: ' + error)
-            );
-
-
-        //TODO: delete test model
-        fetch('http://localhost:1235/api/coords', {method: 'POST', mode: 'no-cors'})
-            .then(res => res.json())
-            .then(json => {
-                const coords = this.state.coords;
-                coords.push(json);
-                console.log('DB updated');
-                this.setState({
-                    updated: true
-                });
-            })
-            .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
 
     }
 

@@ -10,6 +10,8 @@ import {store} from './redux/configureStore';
 
 import './index.css';
 
+
+
 ReactDOM.render((
         <Provider store={store}>
             <App/>
