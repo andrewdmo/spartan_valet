@@ -44,14 +44,14 @@ export default class Gmap extends Component {
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
-                    center={{lat: this.props.coords.latitude, lng: this.props.coords.longitude}}
+                    center={{lat: this.props.currentCoords.lat, lng: this.props.currentCoords.lng}}
                     defaultZoom={11}
                     fullScreenControl={true}
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}>
                     <ExampleComponent
-                        lat={this.props.coords.latitude}
-                        lng={this.props.coords.longitude}
-                        message={this.props.message + '\n' + this.props.coords.latitude.toFixed(4) + '\n' + this.props.coords.longitude.toFixed(4) + '\n' + this.props.lastTime.toLocaleTimeString()}/>
+                        lat={this.props.currentCoords.lat}
+                        lng={this.props.currentCoords.lng}
+                        message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
                 </GoogleMapReact>
             </div>
         );
