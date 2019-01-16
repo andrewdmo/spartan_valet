@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fbfd073-d7f0-4e1c-89b0-76074a06f0db" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/mongoSettings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/Map.container.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Map.container.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -69,8 +69,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="319">
-                  <caret line="47" column="19" lean-forward="true" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+                <state relative-caret-position="369">
+                  <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -81,8 +81,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/components/Gmap.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="720">
-                  <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
+                <state relative-caret-position="375">
+                  <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -118,10 +118,10 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/App.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="57">
-                  <caret line="39" selection-start-line="39" selection-end-line="39" />
+                <state relative-caret-position="80">
+                  <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
                   <folding>
-                    <marker date="1544467424709" expanded="true" signature="3041:3063" ph="..." />
+                    <marker date="1547503884239" expanded="true" signature="3041:3063" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -170,12 +170,12 @@
         <option value="$PROJECT_DIR$/server/routes/index.js" />
         <option value="$PROJECT_DIR$/src/assets/App.css" />
         <option value="$PROJECT_DIR$/server/server.js" />
-        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/components/Logo.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Gmap.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/containers/Map.container.js" />
       </list>
     </option>
@@ -204,23 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -236,7 +219,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.mongoOptions" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/assets/App.css" />
   </component>
   <component name="RecentsManager">
@@ -373,12 +356,19 @@
       <workItem from="1546869070823" duration="5203000" />
       <workItem from="1546954687789" duration="5861000" />
       <workItem from="1547040497107" duration="4928000" />
-      <workItem from="1547130230262" duration="2936000" />
+      <workItem from="1547130230262" duration="3098000" />
+      <workItem from="1547414866555" duration="100000" />
+      <workItem from="1547414987137" duration="3793000" />
+      <workItem from="1547503519097" duration="178000" />
+      <workItem from="1547503844007" duration="1594000" />
+      <workItem from="1547644709631" duration="100000" />
+      <workItem from="1547644822330" duration="214000" />
+      <workItem from="1547645074780" duration="1866000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170828000" />
+    <option name="totallyTimeSpent" value="178835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -661,8 +651,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Gmap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
+        <state relative-caret-position="375">
+          <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -688,18 +678,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="80">
+          <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
           <folding>
-            <marker date="1544467424709" expanded="true" signature="3041:3063" ph="..." />
+            <marker date="1547503884239" expanded="true" signature="3041:3063" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="47" column="19" lean-forward="true" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+        <state relative-caret-position="369">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
