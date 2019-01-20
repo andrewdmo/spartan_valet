@@ -40,17 +40,24 @@ export default class Gmap extends Component {
         // const lng = this.props.coords.lng;
 
 
+        //use elements instead of Message:
+
         return (
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
-                    center={{lat: this.props.currentCoords.lat, lng: this.props.currentCoords.lng}}
+                    center={this.props.currentCoords}
                     defaultZoom={11}
                     fullScreenControl={true}
-                    fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}>
+                    fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
+                    yesIWantToUseGoogleMapApiInternals={true}>
                     <ExampleComponent
                         lat={this.props.currentCoords.lat}
                         lng={this.props.currentCoords.lng}
+                        message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
+                    <ExampleComponent
+                        lat={this.props.previousCoords.lat}
+                        lng={this.props.previousCoords.lng}
                         message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
                 </GoogleMapReact>
             </div>

@@ -10,17 +10,21 @@ export default class MapContainer extends Component {
 
         this.state = {
             currentCoords: {
-                lat: 35.5595, lng: -82.5515, workDate: new Date(),
+                lat: 35.55953, lng: -82.5515, workDate: new Date().toLocaleTimeString(),
                 zoom: 11
             },
             previousCoords: {
-                lat: '', lng: '', workDate: ''
+                lat: 35.55953, lng: -82.5515
+            },
+            lastCoords: {
+                lat: 35.55953, lng: -82.5515
             },
             updated: false,
             message: 'Default coords are: \n',
             newMessage: false,
             seconds: 0
         };
+
 
         // console.log('this.state.coords.lat: ' + this.state.coords.lat);
 
@@ -34,10 +38,12 @@ export default class MapContainer extends Component {
         // this.interval = setInterval(() => this.tick(), 10000); //in ms
 
 
-        // 1. LIVE location + setState currentCoords: -----------------------------
+        // 1. LIVE location + setState currentCoords: -----------------------------<
 
-        navigator.geolocation.getCurrentPosition((pos) => {
+        navigator.geolocation.getCurrentPosition((pos) => {   //once LIVE geoLoc returned:
 
+                // set currentCoords w/ live geoLoc no matter what:
+                console.log('GeoLo live!');
                 this.setState({
                     currentCoords: {
                         lat: pos.coords.latitude, lng: pos.coords.longitude,
@@ -46,102 +52,120 @@ export default class MapContainer extends Component {
                     updated: true,
                     message: 'Live coords are: \n'
                 });
-
-
+                return pos;
             }, //end nav.geoLo callback
 
             (err) => {
                 console.warn(`GeoLocation /\nYour problem Error: \n(${err.code}): ${err.message}`);
-                this.setState({message: 'GeoLocation /\nYour problem Error: ' + err.message, updated: false});
+                this.setState({
+                    message: 'GeoLocation /\nYOUR problem Error: ' + err.message,
+                    updated: false
+                });
+            }, //end error callback
 
-            }, {
+            {
                 enableHighAccuracy: true,
                 timeout:
                     10000,
                 maximumAge:
                     0
-            });
+            } //end option callback
+        );
 
-        // 2. RETRIEVE LATEST Server data: -----------------------------<
+//  (ASYCrously:)
+// 2. RETRIEVE latest Server data: -----------------------------<
 
-        const retrievedCoords = window.fetch('http://localhost:1235/api/coords', {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                // 'Vary': 'Origin', // for specific URLs @ dif IPs
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: "same-origin",
+        window
+            .fetch(
+                'http://localhost:1235/api/coords', {
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        // 'Vary': 'Origin', // for specific URLs @ dif IPs
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: "same-origin",
+                    time: new Date()
 
-            // mode: "no-cors" //careful with use
-        })
-            .then(res => res.json())
-
-            .then(json => {
-                console.log('previousC.lat fetched from DB:', json.previousCoords.lat);
-                this.setState({
-                    previousCoords: json.previousCoords,
-                    // currentCoords: json.currentsCoords,
-                    updated: true,
-                    message: 'Retrieved coords are: \n'
-                });
-
-
-                // 3. POST currentCoords or not: -----------------------------
-
-                if (this.state.currentCoords !== retrievedCoords) {
-                    console.log('this.state.currentCoords.lat: ' + this.state.currentCoords.lat);
-                    console.log('this.state.previousCoords.lat: ' + this.state.previousCoords.lat);
-
-                    console.log('updating DB...');
-
-
-                    // if POST:
-                    window.fetch('http://localhost:1235/api/coords', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            currentCoords: this.state.currentCoords,
-                            // login: 'hubot',
-                        }),
-                        mode: 'no-cors', //TODO: turn off
-                        credentials: "same-origin"
-                    })
-                        .then(res => res.json)
-                        .then(json => {
-                            console.log('DB updated' + json);
-                            this.setState({
-                                updated: true
-                            });
-
-                        })
-
-                        // from POST req
-                        .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
-
-                    // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
-
-                } // if not
-                else {
-                    console.log('Coords NOT updated as Previous = Current')
+                    // mode: "no-cors" //careful with use
                 }
-
+            )
+            .then(res => {
+                console.log(res.status); // 200 if good
+                return res.json()
             })
 
+
+            .then(json => {
+                    console.log('previousCoords.lat from DB:', json.previousCoords.lat);
+                    this.setState({
+                        currentCoords: json.currentCoords,
+                        // currentCoords: previousCoords,
+                        updated: true,
+                        message: 'Retrieved coords are: \n'
+                    }); // setState
+
+
+                    // 3. POST currentCoords or not: -----------------------------<
+
+
+                    if (this.state.currentCoords !== json.currentCoords) {
+                        // console.log('currentCoords.lat: ' + this.state.currentCoords.lat);
+                        // console.log('previousCoords.lat: ' + this.state.previousCoords.lat);
+
+                        console.log('coords different, updating DB...');
+
+
+                        // if yes POST:
+                        window.fetch('http://localhost:1235/api/coords', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                // 'Vary': 'Origin', // for specific URLs @ dif IPs
+                            },
+                            body: JSON.stringify({
+                                currentCoords: this.state.currentCoords,
+                                // login: 'hubot',
+                            }),
+                            mode: 'no-cors', //TODO: turn off
+                            credentials: "same-origin"
+                        })
+                            .then(res => res.json)
+                            .then(json => {
+                                console.log('DB updated' + json);
+                                this.setState({
+                                    updated: true
+                                });
+
+                            })
+
+                            // from POST req
+                            .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
+
+                        // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
+
+                    } // END if
+                    else {
+                        console.log('Coords NOT updated as Previous = Current')
+                    }
+                }
+            )
+
             // from original FETCH
-            .catch(error => console.log('Coords NOT FETCHED from DB: ', error)
-            );
+            .catch(error => {
+                console
+                    .log(
+                        'Coords NOT FETCHED from DB: ', error)
+            });
 
 
-
-
-    } //componentWillMount
+    } //componentDidMount
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        console.log('MC Updated state.previousCoords.lat: ' + this.state.previousCoords.lat);
+        console.log('UPDATED previousCoords.lat: ' + this.state.previousCoords.lat + '\n currentCoords.lat: ' + this.state.currentCoords.lat);
 
 
         // navigator.geolocation.getCurrentPosition((pos) => {
@@ -170,7 +194,8 @@ export default class MapContainer extends Component {
         //             0
         //     }
         // )
-    }
+
+    } //Did Update
 
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -184,14 +209,17 @@ export default class MapContainer extends Component {
     }
 
     render() {
-        console.log('MC Render state.coords.lat: ' + this.state.currentCoords.lat);
+        console.log('RendeR currentCoords.lat: ' + this.state.currentCoords.lat);
         return (
             <Gmap
                 currentCoords={this.state.currentCoords}
+                previousCoords={this.state.previousCoords}
+                lastCoords={this.state.lastCoords}
                 updated={this.state.updated}
                 // lastTime={this.state.lastTime}
                 message={this.state.message}
-                // newMessage={this.state.newMessage} //redundant
+                newMessage={this.state.newMessage} //redundant
+                seconds={0}
             />
         );
     }
