@@ -13,12 +13,16 @@ export default class MapContainer extends Component {
                 lat: 35.55953, lng: -82.5515, workDate: new Date().toLocaleTimeString(),
                 zoom: 11
             },
-            previousCoords: {
-                lat: 35.55953, lng: -82.5515
-            },
             lastCoords: {
-                lat: 35.55953, lng: -82.5515
+                lat: 35.2222, lng: -82.5515
             },
+            priorCoords: {
+                lat: 35.1111, lng: -82.5515
+            },
+            initialCoords: {
+                lat: 35.0001, lng: -82.5515
+            },
+
             updated: false,
             message: 'Default coords are: \n',
             newMessage: false,
@@ -45,6 +49,8 @@ export default class MapContainer extends Component {
                 // set currentCoords w/ live geoLoc no matter what:
                 console.log('GeoLo live!');
                 this.setState({
+                    priorCoords: this.state.lastCoords,
+                    lastCoords: this.state.currentCoords,
                     currentCoords: {
                         lat: pos.coords.latitude, lng: pos.coords.longitude,
                         workDate: new Date().toLocaleTimeString()
@@ -72,8 +78,8 @@ export default class MapContainer extends Component {
             } //end option callback
         );
 
-//  (ASYCrously:)
 // 2. RETRIEVE latest Server data: -----------------------------<
+//  (ASYCrously:)
 
         window
             .fetch(
@@ -85,22 +91,24 @@ export default class MapContainer extends Component {
                         'Content-Type': 'application/json'
                     },
                     credentials: "same-origin",
-                    time: new Date()
+                    reqDate: new Date()
 
                     // mode: "no-cors" //careful with use
                 }
             )
             .then(res => {
-                console.log(res.status); // 200 if good
+                console.log('DB status code: ' + res.status); // 200 if good
                 return res.json()
             })
 
 
             .then(json => {
-                    console.log('previousCoords.lat from DB:', json.previousCoords.lat);
+                    console.log('priorCoords.lat from DB:', json.priorCoords.lat);
                     this.setState({
+                        priorCoords: this.state.lastCoords,
+                        lastCoords: this.state.currentCoords,
                         currentCoords: json.currentCoords,
-                        // currentCoords: previousCoords,
+                        // currentCoords: priorCoords,
                         updated: true,
                         message: 'Retrieved coords are: \n'
                     }); // setState
@@ -110,8 +118,6 @@ export default class MapContainer extends Component {
 
 
                     if (this.state.currentCoords !== json.currentCoords) {
-                        // console.log('currentCoords.lat: ' + this.state.currentCoords.lat);
-                        // console.log('previousCoords.lat: ' + this.state.previousCoords.lat);
 
                         console.log('coords different, updating DB...');
 
@@ -148,7 +154,7 @@ export default class MapContainer extends Component {
 
                     } // END if
                     else {
-                        console.log('Coords NOT updated as Previous = Current')
+                        console.log('Coords NOT updated as prior = Current')
                     }
                 }
             )
@@ -165,8 +171,7 @@ export default class MapContainer extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        console.log('UPDATED previousCoords.lat: ' + this.state.previousCoords.lat + '\n currentCoords.lat: ' + this.state.currentCoords.lat);
-
+        // console.log('client UPDATED');
 
         // navigator.geolocation.getCurrentPosition((pos) => {
         //         console.log('pos ' + pos.coords.latitude + 'prevState: ' + prevState.coords.latitude);
@@ -209,12 +214,18 @@ export default class MapContainer extends Component {
     }
 
     render() {
-        console.log('RendeR currentCoords.lat: ' + this.state.currentCoords.lat);
+        console.log('current: ' + this.state.currentCoords.lat +
+            '\nlast: ' + this.state.lastCoords.lat +
+            '\nprior: ' + this.state.priorCoords.lat +
+            '\ninitial: ' + this.state.initialCoords.lat
+        );
         return (
             <Gmap
                 currentCoords={this.state.currentCoords}
-                previousCoords={this.state.previousCoords}
                 lastCoords={this.state.lastCoords}
+                priorCoords={this.state.priorCoords}
+                initalCoords={this.state.initialCoords}
+
                 updated={this.state.updated}
                 // lastTime={this.state.lastTime}
                 message={this.state.message}

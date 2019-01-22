@@ -56,8 +56,8 @@ export default class Gmap extends Component {
                         lng={this.props.currentCoords.lng}
                         message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
                     <ExampleComponent
-                        lat={this.props.previousCoords.lat}
-                        lng={this.props.previousCoords.lng}
+                        lat={this.props.priorCoords.lat}
+                        lng={this.props.priorCoords.lng}
                         message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
                 </GoogleMapReact>
             </div>
