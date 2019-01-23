@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Gmap from '../components/Gmap';
 import 'whatwg-fetch';
+import {GoogleMap} from 'google-map-react';
 
 export default class MapContainer extends Component {
 
@@ -24,7 +25,18 @@ export default class MapContainer extends Component {
             },
 
             updated: false,
-            message: 'Default coords are: \n',
+
+            // currentMessage: 'LIVE coords are: \n',
+            // lastMessage: 'LAST coords are: \n',
+            // priorMessage: 'PRIOR coords are: \n',
+            // initialMessage: 'INITAL coords are: \n',
+
+            currentMessage: '',
+            lastMessage: '',
+            priorMessage: 'PRIOR coords were: ',
+            initialMessage: 'INITIAL coords were: ',
+
+
             newMessage: false,
             seconds: 0
         };
@@ -56,7 +68,7 @@ export default class MapContainer extends Component {
                         workDate: new Date().toLocaleTimeString()
                     },
                     updated: true,
-                    message: 'Live coords are: \n'
+                    currentMessage: 'LIVE coords are: \n',
                 });
                 return pos;
             }, //end nav.geoLo callback
@@ -64,7 +76,7 @@ export default class MapContainer extends Component {
             (err) => {
                 console.warn(`GeoLocation /\nYour problem Error: \n(${err.code}): ${err.message}`);
                 this.setState({
-                    message: 'GeoLocation /\nYOUR problem Error: ' + err.message,
+                    message: 'GeoLocation /\n(YOUR) Error: ' + err.message,
                     updated: false
                 });
             }, //end error callback
@@ -110,7 +122,7 @@ export default class MapContainer extends Component {
                         currentCoords: json.currentCoords,
                         // currentCoords: priorCoords,
                         updated: true,
-                        message: 'Retrieved coords are: \n'
+                        lastMessage: 'RETRIEVED coords are: \n'
                     }); // setState
 
 
@@ -154,7 +166,7 @@ export default class MapContainer extends Component {
 
                     } // END if
                     else {
-                        console.log('Coords NOT updated as prior = Current')
+                        console.log('Coords NOT updated as Last = Current')
                     }
                 }
             )
@@ -206,6 +218,26 @@ export default class MapContainer extends Component {
         clearInterval(this.interval);
     }
 
+    // fit() {
+    //     let bounds = new GoogleMaps.LatLngBounds();
+    //
+    //     nextProps.places.forEach(p => {
+    //         bounds.extend(new google.maps.LatLng(p.lat, p.lng))
+    //     })
+    //
+    //     // GET NW, SE BY NE, SW
+    //     const ne = bounds.getNorthEast()
+    //     const sw = bounds.getSouthWest()
+    //     const nw = {lat: ne.lat(), lng: sw.lng()}
+    //     const se = {lat: sw.lat(), lng: ne.lng()}
+    //     const {center, zoom} = fitBounds({
+    //         se: {lat: se.lat, lng: se.lng},
+    //         nw: {lat: nw.lat, lng: nw.lng}
+    //     }, {width: 225, height: 777})
+    //
+    //     this.setState({center, zoom})
+    // }
+
 
     tick() {
         this.setState(prevState => ({
@@ -224,11 +256,15 @@ export default class MapContainer extends Component {
                 currentCoords={this.state.currentCoords}
                 lastCoords={this.state.lastCoords}
                 priorCoords={this.state.priorCoords}
-                initalCoords={this.state.initialCoords}
+                initialCoords={this.state.initialCoords}
 
                 updated={this.state.updated}
                 // lastTime={this.state.lastTime}
-                message={this.state.message}
+                currentMessage={this.state.currentMessage}
+                lastMessage={this.state.lastMessage}
+                priorMessage={this.state.priorMessage}
+                initialMessage={this.state.initialMessage}
+
                 newMessage={this.state.newMessage} //redundant
                 seconds={0}
             />

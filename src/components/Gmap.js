@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
+// import {fitBounds} from 'Map.centerZoom';
 
 
 // from: https://www.npmjs.com/package/google-map-react
@@ -26,6 +27,14 @@ const ExampleComponent = ({message}) => (
 
 export default class Gmap extends Component {
 
+    constructor(props) {
+        super(props);
+
+        const currentMessage = this.props.currentMessage;
+        const lastMessage = this.props.lastMessage;
+        const priorMessage = this.props.priorMessage;
+        const initialMessage = this.props.initialMessage;
+    }
 
     render() {
 
@@ -47,18 +56,31 @@ export default class Gmap extends Component {
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
                     center={this.props.currentCoords}
-                    defaultZoom={11}
+                    defaultZoom={7}
                     fullScreenControl={true}
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
                     yesIWantToUseGoogleMapApiInternals={true}>
-                    <ExampleComponent
-                        lat={this.props.currentCoords.lat}
-                        lng={this.props.currentCoords.lng}
-                        message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
-                    <ExampleComponent
-                        lat={this.props.priorCoords.lat}
-                        lng={this.props.priorCoords.lng}
-                        message={this.props.message + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
+
+                    <ExampleComponent style={{opacity: '1'}}
+                                      lat={this.props.currentCoords.lat}
+                                      lng={this.props.currentCoords.lng}
+                                      message={this.props.currentMessage + '\n' + this.props.currentCoords.lat.toFixed(4) + '\n' + this.props.currentCoords.lng.toFixed(4) + '\n' + this.props.currentCoords.workDate}/>
+
+                    <ExampleComponent style={{opacity: '0.8'}}
+                                      lat={this.props.lastCoords.lat}
+                                      lng={this.props.lastCoords.lng}
+                                      message={this.props.lastMessage + '\n' + this.props.lastCoords.lat.toFixed(4) + '\n' + this.props.lastCoords.lng.toFixed(4) + '\n' + this.props.lastCoords.workDate}/>
+
+                    <ExampleComponent style={{opacity: '0.6'}}
+                                      lat={this.props.priorCoords.lat}
+                                      lng={this.props.priorCoords.lng}
+                                      message={this.props.priorMessage + '\n' + this.props.priorCoords.lat.toFixed(4) + '\n' + this.props.priorCoords.lng.toFixed(4) + '\n' + this.props.priorCoords.workDate}/>
+
+                    <ExampleComponent style={{opacity: 0.4}}
+                                      lat={this.props.initialCoords.lat}
+                                      lng={this.props.initialCoords.lng}
+                                      message={this.props.initialMessage + '\n' + this.props.initialCoords.lat.toFixed(4) + '\n' + this.props.initialCoords.lng.toFixed(4) + '\n' + this.props.initialCoords.workDate}/>
+
                 </GoogleMapReact>
             </div>
         );
