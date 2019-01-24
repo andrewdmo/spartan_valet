@@ -82,7 +82,7 @@ h1, h2, p {
     box-shadow: #343434 1vw 1vh 1vmin; /*psy*/
     /*box-shadow: #343434 2vw 2vh 1vmin .1vmax; !*mma*!*/
 }
-v.shade:active {
+.shade:active {
     will-change: filter, drop-shadow, transition; /*keep here*/
 
     filter: drop-shadow(1vw 1vh 2px rgba(52, 52, 52, 0.5));

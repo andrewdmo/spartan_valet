@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 // import {fitBounds} from 'Map.centerZoom';
+import {} from '../containers/Map.fitBounds';
 
 
 // from: https://www.npmjs.com/package/google-map-react
@@ -27,14 +28,15 @@ const ExampleComponent = ({message}) => (
 
 export default class Gmap extends Component {
 
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
+    //
+    //     const currentMessage = this.props.currentMessage;
+    //     const lastMessage = this.props.lastMessage;
+    //     const priorMessage = this.props.priorMessage;
+    //     const initialMessage = this.props.initialMessage;
+    // }
 
-        const currentMessage = this.props.currentMessage;
-        const lastMessage = this.props.lastMessage;
-        const priorMessage = this.props.priorMessage;
-        const initialMessage = this.props.initialMessage;
-    }
 
     render() {
 
@@ -51,11 +53,15 @@ export default class Gmap extends Component {
 
         //use elements instead of Message:
 
+
+        //NEED TO CALCULATE MAX MIN COORDS!!
+
         return (
             <div style={{position: 'absolute', height: '100%', width: '100%', bottom: 0}}>
                 <GoogleMapReact
                     bootstrapURLKeys={{key: 'AIzaSyAEgsGQb9pHiOX0p8-VpZj46VMwOxg0csU'}}
                     center={this.props.currentCoords}
+                    // zoom={{}}
                     defaultZoom={7}
                     fullScreenControl={true}
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
