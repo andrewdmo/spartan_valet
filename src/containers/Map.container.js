@@ -1,52 +1,54 @@
 import React, {Component} from 'react';
 import Gmap from '../components/Gmap';
 import 'whatwg-fetch';
-import {GoogleMap} from 'google-map-react';
+// import {GoogleMap} from 'google-map-react';
+import 'google-map-react/utils';
+import {fitBounds} from "google-map-react/utils";
+// import {FitBounds} from './FitBounds';
+
 
 export default class MapContainer extends Component {
-
 
     constructor(props) {
         super(props);
 
         this.state = {
-            currentCoords: {
-                lat: 35.55953, lng: -82.5515, workDate: new Date().toLocaleTimeString(),
-                zoom: 11
-            },
-            lastCoords: {
-                lat: 35.2222, lng: -82.5515
-            },
-            priorCoords: {
-                lat: 35.1111, lng: -82.5515
-            },
-            initialCoords: {
-                lat: 35.0001, lng: -82.5515
-            },
 
+            coords: {
+                currentCoords: {
+                    lat: 35.55953, lng: -82.5515, workDate: new Date().toLocaleTimeString(),
+                    zoom: 11
+                },
+                lastCoords: {
+                    lat: 35.2222, lng: -82.2222
+                },
+                priorCoords: {
+                    lat: 35.1111, lng: -82.1111
+                },
+                initialCoords: {
+                    lat: 35.0001, lng: -82.0001
+                },
+            },
             updated: false,
+            newMessage: false,
+            seconds: 0,
 
-            // currentMessage: 'LIVE coords are: \n',
-            // lastMessage: 'LAST coords are: \n',
-            // priorMessage: 'PRIOR coords are: \n',
-            // initialMessage: 'INITAL coords are: \n',
+            zoom: 11,
+            center: {lat: 35.55953, lng: -82.5515},
 
             currentMessage: '',
             lastMessage: '',
             priorMessage: 'PRIOR coords were: ',
             initialMessage: 'INITIAL coords were: ',
-
-
-            newMessage: false,
-            seconds: 0
         };
 
 
-        // console.log('this.state.coords.lat: ' + this.state.coords.lat);
-
+        // this.fitBounds = this.fitBounds.bind(this);
+        this.getFitBounds = this.getFitBounds.bind(this);
         this.tick = this.tick.bind(this);
         // this.updatePos = this.updatePos.bind(this);
     }
+
 
     componentDidMount() {
 
@@ -54,7 +56,7 @@ export default class MapContainer extends Component {
         // this.interval = setInterval(() => this.tick(), 10000); //in ms
 
 
-        // 1. LIVE location + setState currentCoords: -----------------------------<
+// 1. LIVE location + setState currentCoords: -----------------------------<
 
         navigator.geolocation.getCurrentPosition((pos) => {   //once LIVE geoLoc returned:
 
@@ -70,6 +72,52 @@ export default class MapContainer extends Component {
                     updated: true,
                     currentMessage: 'LIVE coords are: \n',
                 });
+
+                // 3. POST currentCoords or not: -----------------------------<
+
+                if (this.state.currentCoords) {
+                    if (this.state.currentCoords !== this.state.priorCoords) {
+
+                        console.log('coords different, updating DB...');
+
+                        // if yes POST:
+                        window.fetch('http://localhost:1235/api/coords', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                // 'Vary': 'Origin', // for specific URLs @ dif IPs
+                            },
+                            body: JSON.stringify({
+                                currentCoords: this.state.currentCoords,
+                                // login: 'hubot',
+                            }),
+                            mode: 'no-cors', //TODO: turn off
+                            credentials: "same-origin"
+                        })
+                            .then(res => res.json)
+                            .then(json => {
+                                console.log('DB updated' + json);
+                                this.setState({
+                                    updated: true
+                                });
+                                // this.getFitBounds();
+
+
+                            })
+
+                            // from POST req
+                            .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
+
+                        // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
+
+                    } // END if
+                    else {
+                        console.log('Coords NOT updated as Last = Current')
+                    }
+                }// IF (to POST)
+
                 return pos;
             }, //end nav.geoLo callback
 
@@ -79,7 +127,7 @@ export default class MapContainer extends Component {
                     message: 'GeoLocation /\n(YOUR) Error: ' + err.message,
                     updated: false
                 });
-            }, //end error callback
+            }, //error
 
             {
                 enableHighAccuracy: true,
@@ -87,8 +135,10 @@ export default class MapContainer extends Component {
                     10000,
                 maximumAge:
                     0
-            } //end option callback
-        );
+            } //option
+
+        ); //end NAV.geoLO
+
 
 // 2. RETRIEVE latest Server data: -----------------------------<
 //  (ASYCrously:)
@@ -117,57 +167,16 @@ export default class MapContainer extends Component {
             .then(json => {
                     console.log('priorCoords.lat from DB:', json.priorCoords.lat);
                     this.setState({
-                        priorCoords: this.state.lastCoords,
-                        lastCoords: this.state.currentCoords,
-                        currentCoords: json.currentCoords,
+                        priorCoords: json.priorCoords,
+                        lastCoords: json.lastCoords,
+                        // currentCoords: json.currentCoords,
                         // currentCoords: priorCoords,
                         updated: true,
                         lastMessage: 'RETRIEVED coords are: \n'
                     }); // setState
+                    // this.getFitBounds();
 
 
-                    // 3. POST currentCoords or not: -----------------------------<
-
-
-                    if (this.state.currentCoords !== json.currentCoords) {
-
-                        console.log('coords different, updating DB...');
-
-
-                        // if yes POST:
-                        window.fetch('http://localhost:1235/api/coords', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'Access-Control-Allow-Origin': '*',
-                                // 'Vary': 'Origin', // for specific URLs @ dif IPs
-                            },
-                            body: JSON.stringify({
-                                currentCoords: this.state.currentCoords,
-                                // login: 'hubot',
-                            }),
-                            mode: 'no-cors', //TODO: turn off
-                            credentials: "same-origin"
-                        })
-                            .then(res => res.json)
-                            .then(json => {
-                                console.log('DB updated' + json);
-                                this.setState({
-                                    updated: true
-                                });
-
-                            })
-
-                            // from POST req
-                            .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
-
-                        // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
-
-                    } // END if
-                    else {
-                        console.log('Coords NOT updated as Last = Current')
-                    }
                 }
             )
 
@@ -182,6 +191,9 @@ export default class MapContainer extends Component {
     } //componentDidMount
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+
+        // this.getFitBounds();
+
 
         // console.log('client UPDATED');
 
@@ -238,35 +250,104 @@ export default class MapContainer extends Component {
     //     this.setState({center, zoom})
     // }
 
+    getFitBounds() {
+
+        //LAT
+        const maxLat = Math.max(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.priorCoords.lat, this.state.coords.initialCoords.lat);
+        const minLat = Math.min(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.priorCoords.lat, this.state.coords.initialCoords.lat);
+
+        //LONG
+        const maxLng = Math.max(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.priorCoords.lng, this.state.coords.initialCoords.lng);
+        const minLng = Math.min(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.priorCoords.lng, this.state.coords.initialCoords.lng);
+
+        //may need to change:
+        const bounds = {
+
+            ne: {lat: maxLat, lng: maxLng}, //long is -
+            sw: {lat: minLat, lng: minLng},
+
+            // nw: {lat: maxLat, lng: minLng},
+            // se: {lat: minLat, lng: maxLng},
+
+        };
+
+        console.log('maxLat: ', maxLat);
+        console.log('minLat: ', minLat);
+        console.log('maxLng: ', maxLng);
+        console.log('minLng: ', minLng);
+
+
+        const size = {
+            // width: 640, // Map width in pixels
+            // height: 380, // Map height in pixels
+
+            //viewport:
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+        // console.log('size.heaight: ', size.height);
+
+        const {center, zoom} = fitBounds(bounds, size);
+
+        console.log('zoom: ' + zoom);
+        console.log('center.lat: ' + center.lat);
+        console.log('center.lng: ' + center.lng);
+
+
+        // this.setState({zoom: zoom, center: center});
+
+        // const newCenter = {
+        //     lat: (center.lat * .8),
+        //     lng: center.lng
+        // };
+        // console.log('newCenter: ', newCenter.lat);
+
+        return {center, zoom};
+
+    }; //getFitBounds
+
 
     tick() {
         this.setState(prevState => ({
             seconds: prevState.seconds + 1
         }));
-    }
+    } //tick
+
+    // //LAT
+
 
     render() {
-        console.log('current: ' + this.state.currentCoords.lat +
-            '\nlast: ' + this.state.lastCoords.lat +
-            '\nprior: ' + this.state.priorCoords.lat +
-            '\ninitial: ' + this.state.initialCoords.lat
+
+        // const {center, zoom} = this.getFitBounds();
+        const {center, zoom} = this.getFitBounds();
+
+        console.log(zoom);
+        console.log('current: ' + this.state.coords.currentCoords.lng +
+            '\nlast: ' + this.state.coords.lastCoords.lng +
+            '\nprior: ' + this.state.coords.priorCoords.lng +
+            '\ninitial: ' + this.state.coords.initialCoords.lng
         );
+
         return (
             <Gmap
-                currentCoords={this.state.currentCoords}
-                lastCoords={this.state.lastCoords}
-                priorCoords={this.state.priorCoords}
-                initialCoords={this.state.initialCoords}
+
+                coords={this.state.coords}
+                // currentCoords={this.state.currentCoords}
+                // lastCoords={this.state.lastCoords}
+                // priorCoords={this.state.priorCoords}
+                // initialCoords={this.state.initialCoords}
 
                 updated={this.state.updated}
-                // lastTime={this.state.lastTime}
+                newMessage={this.state.newMessage} //redundant
+                seconds={0}
+
+                center={center} //single bracket
+                zoom={zoom} //single bracket
                 currentMessage={this.state.currentMessage}
                 lastMessage={this.state.lastMessage}
                 priorMessage={this.state.priorMessage}
                 initialMessage={this.state.initialMessage}
 
-                newMessage={this.state.newMessage} //redundant
-                seconds={0}
             />
         );
     }
