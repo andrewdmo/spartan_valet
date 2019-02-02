@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1fbfd073-d7f0-4e1c-89b0-76074a06f0db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Gmap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Gmap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/Map.container.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Map.container.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Map.fitBounds.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -61,12 +59,15 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="384">
-                  <caret line="265" column="55" selection-start-line="265" selection-start-column="55" selection-end-line="265" selection-end-column="55" />
+                <state relative-caret-position="406">
+                  <caret line="423" column="16" lean-forward="true" selection-start-line="423" selection-start-column="16" selection-end-line="424" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                     <element signature="e#149#181#0" expanded="true" />
-                    <marker date="1549027985695" expanded="true" signature="7968:8641" ph="..." />
+                    <element signature="e#7305#8602#0" />
+                    <element signature="e#7393#7447#0" />
+                    <element signature="e#8695#8705#0" />
+                    <marker date="1549067861956" expanded="true" signature="7086:7759" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -103,8 +104,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/components/Gmap.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="585">
-                  <caret line="39" column="35" lean-forward="true" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+                <state relative-caret-position="439">
+                  <caret line="49" column="60" selection-start-line="49" selection-start-column="60" selection-end-line="49" selection-end-column="60" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -136,7 +137,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/containers/FitBounds.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="495">
+                <state relative-caret-position="480">
                   <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
                   <folding>
                     <element signature="e#0#47#0" expanded="true" />
@@ -234,41 +235,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sp_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sp_web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="containers" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -448,12 +414,13 @@
       <workItem from="1548940444603" duration="158000" />
       <workItem from="1548941384014" duration="130000" />
       <workItem from="1548956585888" duration="105000" />
-      <workItem from="1549026489669" duration="1273000" />
+      <workItem from="1549026489669" duration="4363000" />
+      <workItem from="1549058819405" duration="7370000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228589000" />
+    <option name="totallyTimeSpent" value="239049000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -584,6 +551,15 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointLogExpression">
+      <expression>
+        <expression-string>this.setState({</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/yarn.lock">
@@ -1360,7 +1336,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/FitBounds.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
+        <state relative-caret-position="480">
           <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
@@ -1368,10 +1344,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="405" column="8" selection-start-line="405" selection-start-column="8" selection-end-line="405" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Gmap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="35" lean-forward="true" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        <state relative-caret-position="439">
+          <caret line="49" column="60" selection-start-line="49" selection-start-column="60" selection-end-line="49" selection-end-column="60" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -1380,12 +1363,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="265" column="55" selection-start-line="265" selection-start-column="55" selection-end-line="265" selection-end-column="55" />
+        <state relative-caret-position="406">
+          <caret line="423" column="16" lean-forward="true" selection-start-line="423" selection-start-column="16" selection-end-line="424" selection-end-column="17" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#149#181#0" expanded="true" />
-            <marker date="1549027985695" expanded="true" signature="7968:8641" ph="..." />
+            <element signature="e#7305#8602#0" />
+            <element signature="e#7393#7447#0" />
+            <element signature="e#8695#8705#0" />
+            <marker date="1549067861956" expanded="true" signature="7086:7759" ph="..." />
           </folding>
         </state>
       </provider>
