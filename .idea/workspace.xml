@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fbfd073-d7f0-4e1c-89b0-76074a06f0db" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/Map.container.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Map.container.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -59,15 +58,24 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="406">
-                  <caret line="423" column="16" lean-forward="true" selection-start-line="423" selection-start-column="16" selection-end-line="424" selection-end-column="17" />
+                <state relative-caret-position="452">
+                  <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                     <element signature="e#149#181#0" expanded="true" />
-                    <element signature="e#7305#8602#0" />
-                    <element signature="e#7393#7447#0" />
-                    <element signature="e#8695#8705#0" />
-                    <marker date="1549067861956" expanded="true" signature="7086:7759" ph="..." />
+                    <element signature="e#4712#4730#0" />
+                    <element signature="e#3252#3270#0" />
+                    <element signature="e#3552#3620#0" />
+                    <element signature="e#5700#6997#0" />
+                    <element signature="e#7039#7084#0" />
+                    <element signature="e#7844#7870#0" />
+                    <element signature="e#12125#14488#0" />
+                    <element signature="e#12306#12514#0" />
+                    <element signature="e#12525#12560#0" />
+                    <element signature="e#12715#12931#0" />
+                    <element signature="e#13054#13086#0" />
+                    <element signature="e#13260#13282#0" />
+                    <element signature="e#13430#13456#0" />
                   </folding>
                 </state>
               </provider>
@@ -416,11 +424,12 @@
       <workItem from="1548956585888" duration="105000" />
       <workItem from="1549026489669" duration="4363000" />
       <workItem from="1549058819405" duration="7370000" />
+      <workItem from="1549113308659" duration="6591000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="239049000" />
+    <option name="totallyTimeSpent" value="245640000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -1277,6 +1286,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Map.fitBounds.js" />
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="405" column="8" selection-start-line="405" selection-start-column="8" selection-end-line="405" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1344,13 +1360,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="405" column="8" selection-start-line="405" selection-start-column="8" selection-end-line="405" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Gmap.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="439">
@@ -1363,15 +1372,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Map.container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="423" column="16" lean-forward="true" selection-start-line="423" selection-start-column="16" selection-end-line="424" selection-end-column="17" />
+        <state relative-caret-position="452">
+          <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#149#181#0" expanded="true" />
-            <element signature="e#7305#8602#0" />
-            <element signature="e#7393#7447#0" />
-            <element signature="e#8695#8705#0" />
-            <marker date="1549067861956" expanded="true" signature="7086:7759" ph="..." />
+            <element signature="e#4712#4730#0" />
+            <element signature="e#3252#3270#0" />
+            <element signature="e#3552#3620#0" />
+            <element signature="e#5700#6997#0" />
+            <element signature="e#7039#7084#0" />
+            <element signature="e#7844#7870#0" />
+            <element signature="e#12125#14488#0" />
+            <element signature="e#12306#12514#0" />
+            <element signature="e#12525#12560#0" />
+            <element signature="e#12715#12931#0" />
+            <element signature="e#13054#13086#0" />
+            <element signature="e#13260#13282#0" />
+            <element signature="e#13430#13456#0" />
           </folding>
         </state>
       </provider>

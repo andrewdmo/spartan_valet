@@ -12,22 +12,30 @@ export default class MapContainer extends Component {
     constructor(props) {
         super(props);
 
+        this.newCoords = this.newCoords.bind(this);
+        this.livePost = this.livePost.bind(this);
+        // this.fitBounds = this.fitBounds.bind(this);
+        // this.toPostOrNot = this.toPostOrNot.bind(this);
+        this.getFitBounds = this.getFitBounds.bind(this);
+        this.tick = this.tick.bind(this);
+        // this.updatePos = this.updatePos.bind(this);
+
         this.state = {
             coords: {
                 currentCoords: {
-                    lat: 35.2222, lng: -82.0004
+                    lat: 35.2222, lng: -82.0004, workDate: ''
                 },
                 //     lat: 35.55953, lng: -82.5515, workDate: new Date().toLocaleTimeString(),
                 //     zoom: 11
                 // },
                 lastCoords: {
-                    lat: 35.1111, lng: -82.0003
+                    lat: 35.1111, lng: -82.0003, workDate: ''
                 },
                 priorCoords: {
-                    lat: 35.0001, lng: -82.0002
+                    lat: 35.0001, lng: -82.0002, workDate: ''
                 },
                 initialCoords: {
-                    lat: 35.3333, lng: -82.0001
+                    lat: 35.3333, lng: -82.0001, workDate: ''
                 },
             },
             LIVEupdated: false,
@@ -40,19 +48,12 @@ export default class MapContainer extends Component {
 
 
             // combine like coords:
-            currentMessage: 'searching', //add load spin
+            currentMessage: 'searching', //todo add load spin
             lastMessage: 'LAST coords:',
             priorMessage: 'PRIOR coords: ',
             initialMessage: 'INITIAL coords: ',
-        };
-
-
-        // this.fitBounds = this.fitBounds.bind(this);
-        this.toPostOrNot = this.toPostOrNot.bind(this);
-        this.getFitBounds = this.getFitBounds.bind(this);
-        this.tick = this.tick.bind(this);
-        // this.updatePos = this.updatePos.bind(this);
-    }
+        }; // this.state
+    } // constructor
 
 
     componentDidMount() {
@@ -63,30 +64,124 @@ export default class MapContainer extends Component {
 
 // 1. LIVE location + setState currentCoords: -----------------------------<
 
+        // const thisCoords = this;
+
         navigator.geolocation.getCurrentPosition((pos) => {   //once LIVE geoLoc returned:
+
+
+                console.log(
+                    'pre GEOLO current: ' + this.state.coords.currentCoords.lat +
+                    '\nlast: ' + this.state.coords.lastCoords.lat +
+                    '\nprior: ' + this.state.coords.priorCoords.lat +
+                    '\ninitial: ' + this.state.coords.initialCoords.lat
+                );
+
+
+                // thisCoords.setState({
+                //         // coords: newCoords
+                //         coords: {
+                //             priorCoords: this.state.coords.lastCoords,
+                //             lastCoords: this.state.coords.currentCoords,
+                //             currentCoords: {
+                //                 lat: pos.coords.latitude,
+                //                 lng: pos.coords.longitude,
+                //                 workDate: new Date().toLocaleTimeString()
+                //             }
+                //             ,
+                //             LIVEupdated:
+                //                 true,
+                //             currentMessage:
+                //                 'LIVE coords are: \n',
+                //         }
+                //     }
+                // )
+                // ;
+
 
                 // set currentCoords w/ live geoLoc no matter what:
 
                 console.log('GEOLO live!');
                 // console.log('geoLo.state.current.lat: ', this.state.coords.currentCoords.lat);
+                console.log('pos: ', pos.coords.latitude);
 
-                this.setState({
-                    coords: {
-                        priorCoords: this.state.coords.lastCoords,
-                        lastCoords: this.state.coords.currentCoords,
-                        currentCoords: {
-                            lat: pos.coords.latitude,
-                            lng: pos.coords.longitude,
-                            workDate: new Date().toLocaleTimeString()
+
+                // const newCoords = {
+                //     priorCoords: {
+                //         lat: this.state.coords.lastCoords.lat,
+                //         lng: this.state.coords.lastCoords.lng
+                //     },
+                //     lastCoords: {
+                //         lat: this.state.coords.currentCoords.lat,
+                //         lng: this.state.coords.currentCoords.lng
+                //     },
+                //     currentCoords: {
+                //         lat: pos.coords.latitude,
+                //         lng: pos.coords.longitude,
+                //         workDate: new Date().toLocaleTimeString()
+                //     }
+                // };
+
+                // this.livePost(this.newCoords(pos));
+
+                console.log(
+                    'GEOLO current: ' + this.state.coords.currentCoords.lat +
+                    '\nlast: ' + this.state.coords.lastCoords.lat +
+                    '\nprior: ' + this.state.coords.priorCoords.lat +
+                    '\ninitial: ' + this.state.coords.initialCoords.lat
+                );
+                const a = (pos) => {
+                    const freshCoords = this.newCoords(pos);
+                    this.setState({
+                            // coords: this.newCoords(pos)
+                            coords: freshCoords
+
+                            // coords: {
+                            // priorCoords: this.state.coords.lastCoords,
+                            // lastCoords: this.state.coords.currentCoords,
+                            // currentCoords: {
+                            //     lat: pos.coords.latitude,
+                            //     lng: pos.coords.longitude,
+                            //     workDate: new Date().toLocaleTimeString()
+                            // }
+                            ,
+                            LIVEupdated:
+                                true,
+                            currentMessage:
+                                'LIVE coords are: \n',
                         }
-                    },
-                    LIVEupdated: true,
-                    // DBupdated: false,
-                    currentMessage: 'LIVE coords are: \n',
-                });
-                console.log('geoLo.state.current.lat: ', this.state.coords.currentCoords.lat);
+                    )
+                }
+                ;
 
-                this.toPostOrNot(pos.coords); //push to DB?
+                // this.livePost(newCoords); // replaces below
+
+
+                // this.setState({
+                //     coords: {
+                //         priorCoords: this.state.coords.lastCoords,
+                //         lastCoords: this.state.coords.currentCoords,
+                //         currentCoords: {
+                //             lat: pos.coords.latitude,
+                //             lng: pos.coords.longitude,
+                //             workDate: new Date().toLocaleTimeString()
+                //         }
+                //     },
+                //     LIVEupdated: true,
+                //     // DBupdated: false,
+                //     currentMessage: 'LIVE coords are: \n',
+                // });
+                // console.log(
+                //     'post GEOLO current: ' + this.state.coords.currentCoords.lat +
+                //     '\nlast: ' + this.state.coords.lastCoords.lat +
+                //     '\nprior: ' + this.state.coords.priorCoords.lat +
+                //     '\ninitial: ' + this.state.coords.initialCoords.lat
+                // );
+
+                // console.log('geoLo.state.current.lat: ', this.state.coords.currentCoords.lat);
+
+                // this.toPostOrNot(pos.coords); //push to DB?
+
+                // return pos;
             }, //end nav.geoLo callback
 
             (err) => {
@@ -164,7 +259,7 @@ export default class MapContainer extends Component {
 //             });
 //         // } //  IF
 
-    } //componentDidMount
+    } //   componentDidMount
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -206,131 +301,195 @@ export default class MapContainer extends Component {
         clearInterval(this.interval);
     }
 
-    // fit() {
-    //     let bounds = new GoogleMaps.LatLngBounds();
+    // toPostOrNot(IFcoords) {
     //
-    //     nextProps.places.forEach(p => {
-    //         bounds.extend(new google.maps.LatLng(p.lat, p.lng))
-    //     })
+    //     console.log(
+    //         'TOPOSTORNOTcurrent: ' + this.state.coords.currentCoords.lat +
+    //         '\nlast: ' + this.state.coords.lastCoords.lat +
+    //         '\nprior: ' + this.state.coords.priorCoords.lat +
+    //         '\ninitial: ' + this.state.coords.initialCoords.lat
+    //     );
+    //     //todo TRY CATCH
     //
-    //     // GET NW, SE BY NE, SW
-    //     const ne = bounds.getNorthEast()
-    //     const sw = bounds.getSouthWest()
-    //     const nw = {lat: ne.lat(), lng: sw.lng()}
-    //     const se = {lat: sw.lat(), lng: ne.lng()}
-    //     const {center, zoom} = fitBounds({
-    //         se: {lat: se.lat, lng: se.lng},
-    //         nw: {lat: nw.lat, lng: nw.lng}
-    //     }, {width: 225, height: 777})
+    //     // 3. POST currentCoords or not: -----------------------------<
     //
-    //     this.setState({center, zoom})
-    // }
+    //     // 3a. GEOLO ok, DB no:
+    //
+    //     if (this.state.LIVEupdated !== false && this.state.DBupdated !== true) {
+    //
+    //         const LIVEcoords = IFcoords;
+    //
+    //         console.log('toPostorNot.pos.lat: ', LIVEcoords.latitude); //OK
+    //
+    //         //so update CURRENT pronto:
+    //         // this.setState({
+    //         //     coords: {
+    //         //         priorCoords: this.state.coords.lastCoords,
+    //         //         lastCoords: this.state.coords.currentCoords,
+    //         //         currentCoords: {
+    //         //             lat: LIVEcoords.latitude,
+    //         //             lng: LIVEcoords.longitude,
+    //         //             workDate: new Date().toLocaleTimeString()
+    //         //         },
+    //         //     }
+    //         // });
+    //
+    //         //3b. GEO no, DB ok
+    //     } else if (this.state.DBupdated !== false && this.state.LIVEupdated !== true
+    //     ) {
+    //
+    //         const DBcoords = IFcoords;
+    //
+    //         console.log('toPostorNot.currentCoords.lat: ' + this.state.coords.currentCoords.lat);
+    //
+    //         if (DBcoords.lastCoords !== this.state.coords.lastCoords) { //if need to update CURRENT & DB
+    //             // if (this.state.currentCoords !== this.state.lastCoords) {
+    //
+    //             //so update CURRENT pronto:
+    //             this.setState({
+    //                 coords: {
+    //                     priorCoords: this.state.coords.lastCoords,
+    //                     lastCoords: {
+    //                         lat: DBcoords.lastCoords.lat,
+    //                         lng: DBcoords.lastCoords.lng,
+    //                         workDate: new Date().toLocaleTimeString()
+    //                     },
+    //                 }
+    //             });
+    //
+    //             console.log('coords different, updating DB...');
+    //
+    //             // if yes POST:
+    //             window.fetch('http://localhost:1235/api/coords', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Accept': 'application/json',
+    //                     'Access-Control-Allow-Origin': '*',
+    //                     // 'Vary': 'Origin', // for specific URLs @ dif IPs
+    //                 },
+    //                 body: JSON.stringify({
+    //                     currentCoords: this.state.currentCoords,
+    //                     // login: 'hubot',
+    //                 }),
+    //                 mode: 'no-cors', //TODO: turn off
+    //                 credentials: "same-origin"
+    //             })
+    //                 .then(res => res.json)
+    //                 .then(json => {
+    //                     console.log('DB updated' + json);
+    //                     // this.getFitBounds();
+    //
+    //
+    //                 })
+    //
+    //                 // from POST req
+    //                 .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
+    //
+    //             // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
+    //
+    //         } // END if
+    //         else {
+    //             console.log('Coords NOT updated as Last = Current')
+    //         }
+    //
+    //         // }//  3. IF (to POST)
+    //     } //   ELSE IF
+    //
+    //     else if (this.state.DBupdated !== false && this.state.LIVEupdated !== false) {  // GEO & DB ok
+    //
+    //         this.setState({
+    //             LIVEupdated: true,
+    //             DBupdated: true
+    //         });
+    //     }
+    //
+    // }   //toPOSTorNOT
 
-    toPostOrNot(IFcoords) {
-
-
-        //todo TRY CATCH
-
-        // 3. POST currentCoords or not: -----------------------------<
-
-
-        // 3a. GEOLO ok, DB no:
-
-        if (this.state.LIVEupdated !== false && this.state.DBupdated !== true) {
-
-            const LIVEcoords = IFcoords;
-
-            console.log('toPostorNot.pos.lat: ', LIVEcoords.latitude); //OK
-
-            //so update CURRENT pronto:
-            // this.setState({
-            //     coords: {
-            //         priorCoords: this.state.coords.lastCoords,
-            //         lastCoords: this.state.coords.currentCoords,
-            //         currentCoords: {
-            //             lat: LIVEcoords.latitude,
-            //             lng: LIVEcoords.longitude,
-            //             workDate: new Date().toLocaleTimeString()
-            //         },
-            //     }
-            // });
-
-            //3b. GEO no, DB ok
-        } else if (this.state.DBupdated !== false && this.state.LIVEupdated !== true
-        ) {
-
-            const DBcoords = IFcoords;
-
-            console.log('toPostorNot.currentCoords.lat: ' + this.state.coords.currentCoords.lat);
-
-            if (DBcoords.lastCoords !== this.state.coords.lastCoords) { //if need to update CURRENT & DB
-                // if (this.state.currentCoords !== this.state.lastCoords) {
-
-                //so update CURRENT pronto:
-                this.setState({
-                    coords: {
-                        priorCoords: this.state.coords.lastCoords,
-                        lastCoords: {
-                            lat: DBcoords.lastCoords.lat,
-                            lng: DBcoords.lastCoords.lng,
-                            workDate: new Date().toLocaleTimeString()
-                        },
-                    }
-                });
-
-                console.log('coords different, updating DB...');
-
-                // if yes POST:
-                window.fetch('http://localhost:1235/api/coords', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                        // 'Vary': 'Origin', // for specific URLs @ dif IPs
-                    },
-                    body: JSON.stringify({
-                        currentCoords: this.state.currentCoords,
-                        // login: 'hubot',
-                    }),
-                    mode: 'no-cors', //TODO: turn off
-                    credentials: "same-origin"
-                })
-                    .then(res => res.json)
-                    .then(json => {
-                        console.log('DB updated' + json);
-                        // this.getFitBounds();
-
-
-                    })
-
-                    // from POST req
-                    .catch(error => console.log('Coords NOT POSTED to DB: ' + error));
-
-                // console.log('UPDATE state.coords.lat: ' + this.state.coords.latitude) //leave here
-
-            } // END if
-            else {
-                console.log('Coords NOT updated as Last = Current')
+    newCoords(pos) {
+        return {
+            priorCoords: {
+                lat: this.state.coords.lastCoords.lat,
+                lng: this.state.coords.lastCoords.lng
+            },
+            lastCoords: {
+                lat: this.state.coords.currentCoords.lat,
+                lng: this.state.coords.currentCoords.lng
+            },
+            currentCoords: {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                workDate: new Date().toLocaleTimeString()
             }
-
-            // }//  3. IF (to POST)
-        } //   ELSE IF
-
-        else if (this.state.DBupdated !== false && this.state.LIVEupdated !== false) {  // GEO & DB ok
-
-            this.setState({
-                LIVEupdated: true,
-                DBupdated: true
-            });
-
         }
+    };
 
+    livePost(newCoords) {
 
+        console.log(
+            'pre GEOLO current: ' + this.state.coords.currentCoords.lat +
+            '\nlast: ' + this.state.coords.lastCoords.lat +
+            '\nprior: ' + this.state.coords.priorCoords.lat +
+            '\ninitial: ' + this.state.coords.initialCoords.lat
+        );
+
+        this.setState({
+                coords: newCoords
+                // coords: {
+                // priorCoords: this.state.coords.lastCoords,
+                // lastCoords: this.state.coords.currentCoords,
+                // currentCoords: {
+                //     lat: pos.coords.latitude,
+                //     lng: pos.coords.longitude,
+                //     workDate: new Date().toLocaleTimeString()
+                // }
+                ,
+                LIVEupdated:
+                    true,
+                currentMessage:
+                    'LIVE coords are: \n',
+            }
+        )
+        ;
+
+        console
+            .log(
+                'post GEOLO current: '
+                +
+                this
+                    .state
+                    .coords
+                    .currentCoords
+                    .lat
+                +
+                '\nlast: '
+                +
+                this
+                    .state
+                    .coords
+                    .lastCoords
+                    .lat
+                +
+                '\nprior: '
+                +
+                this
+                    .state
+                    .coords
+                    .priorCoords
+                    .lat
+                +
+                '\ninitial: '
+                +
+                this
+                    .state
+                    .coords
+                    .initialCoords
+                    .lat
+            )
+        ;
     }
 
     getFitBounds() {
-
 
         console.log('GETFITBOUNDS current: ' + this.state.coords.currentCoords.lat +
             '\nlast: ' + this.state.coords.lastCoords.lat +
@@ -393,7 +552,8 @@ export default class MapContainer extends Component {
 
         return {center, zoom};
 
-    }; //getFitBounds
+    }
+    ; //getFitBounds
 
 
     tick() {
@@ -402,15 +562,17 @@ export default class MapContainer extends Component {
         }));
     } //tick
 
-    // //LAT
+// //LAT
 
 
     render() {
 
-        console.log('current: ' + this.state.coords.currentCoords.lat +
+        console.log(
+            'RENDER current: ' + this.state.coords.currentCoords.lat +
             '\nlast: ' + this.state.coords.lastCoords.lat +
             '\nprior: ' + this.state.coords.priorCoords.lat +
-            '\ninitial: ' + this.state.coords.initialCoords.lat);
+            '\ninitial: ' + this.state.coords.initialCoords.lat
+        );
 
         // const {center, zoom} = this.getFitBounds();
         const {center, zoom} = this.getFitBounds();
