@@ -47,17 +47,17 @@ export default class Gmap extends Component {
                                       lng={this.props.coords.currentCoords.lng}
                                       message={this.props.currentMessage + '\n' + this.props.coords.currentCoords.lat.toFixed(4) + '\n' + this.props.coords.currentCoords.lng.toFixed(4) + '\n' + this.props.coords.currentCoords.workDate}/>
 
-                    <ExampleComponent style={{opacity: '0.8'}}
+                    <ExampleComponent style={{opacity: '0.6'}}
                                       lat={this.props.coords.lastCoords.lat}
                                       lng={this.props.coords.lastCoords.lng}
                                       message={this.props.lastMessage + '\n' + this.props.coords.lastCoords.lat.toFixed(4) + '\n' + this.props.coords.lastCoords.lng.toFixed(4) + '\n' + this.props.coords.lastCoords.workDate}/>
 
-                    <ExampleComponent style={{opacity: '0.6'}}
+                    <ExampleComponent style={{opacity: '0.4'}}
                                       lat={this.props.coords.priorCoords.lat}
                                       lng={this.props.coords.priorCoords.lng}
                                       message={this.props.priorMessage + '\n' + this.props.coords.priorCoords.lat.toFixed(4) + '\n' + this.props.coords.priorCoords.lng.toFixed(4) + '\n' + this.props.coords.priorCoords.workDate}/>
 
-                    <ExampleComponent style={{opacity: 0.4}}
+                    <ExampleComponent style={{opacity: .2}}
                                       lat={this.props.coords.initialCoords.lat}
                                       lng={this.props.coords.initialCoords.lng}
                                       message={this.props.initialMessage + '\n' + this.props.coords.initialCoords.lat.toFixed(4) + '\n' + this.props.coords.initialCoords.lng.toFixed(4) + '\n' + this.props.coords.initialCoords.workDate}/>

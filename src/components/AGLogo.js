@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import spartanLogo from '../assets/spartanLogo.png';
+import AGLogo_2 from '../assets/AGLogo_2.jpg';
 import MapContainer from "../containers/Map.container";
+import AGIndex from "./AGIndex";
 
-export default class Logo extends Component {
+export default class AGLogo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +21,7 @@ export default class Logo extends Component {
     logoClick = () => {
         // e.preventDefault(); //prevent default link behavior
 
-        Map.container.forceUpdate = (e) => {
+        AGIndex.forceUpdate = (e) => {
             console.log('forceUpdate e: ' + e);
         };
 
@@ -46,7 +47,7 @@ export default class Logo extends Component {
         const logoSpin = this.state.spin + ' shadow';
 
         return (
-            <img src={spartanLogo} className={logoSpin} onClick={this.logoClick} alt="logo"/>
+            <img src={AGLogo_2} className={logoSpin} onClick={this.logoClick} alt="logo"/>
         );
     }
 }

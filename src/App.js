@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import './App.css';
-import Index from "./components/Index";
+import AGIndex from "./components/AGIndex";
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <Index/>
+                <AGIndex/>
             </div>
         );
     }
 }
 
 export default App;
+
+{/*<Index/>*/
+}
