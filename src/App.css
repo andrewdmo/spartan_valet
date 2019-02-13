@@ -29,11 +29,41 @@ table, .table {
     max-width: 95vw;
 }
 
+.row {
+    opacity: 1;
+    transition: all 1s ease-in;
+}
+
 td, .td {
     /*max-width: 40vw;*/
 }
 
-.AGForm {
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.AGBackPic {
+    will-change: z-index;
+    /*opacity: .8;*/
+    right: 5vw;
+    top: 5vh;
+    margin-left: 15vh;
+    width: 40vmin;
+    margin-top: 5vh;
+    /*margin-right: 40px;*/
+    transition: all 2s;
+
+}
+
+.AGFormField {
+    height: 18px;
+    /*opacity: 1;*/
+    /*transition: all 1s ease-out;*/
+}
+
+.AGFormField.Per {
+    background-color: rgba(99, 150, 199, 0.57);
 }
 
 .AGIndexBack {
@@ -188,7 +218,7 @@ td, .td {
 
 .topTitle {
     will-change: transform; /*keep here*/
-    margin: 1vmin;
+    margin: 3vmin;
     /*font-family: "Patua One", normal, sans-serif;*/
     font-family: "Baskerville", normal, sans-serif;
 

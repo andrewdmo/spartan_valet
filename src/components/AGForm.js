@@ -10,15 +10,18 @@ export default class AGForm extends Component {
             buckedPer: 0,
             // buckedPer: this.state.bucked / this.state.unbucked,
             qc: '',
-            qcPer: 0
+            qcPer: 0,
+            submitMessage: 'Save?'
             // qcPer: this.state.qc / this.state.unbucked
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.fieldClick = this.fieldClick.bind(this);
+        this.fieldChange = this.fieldChange.bind(this);
+        this.formSubmit = this.formSubmit.bind(this);
     }
 
-    handleChange = (event) => {
+
+    fieldChange = (event) => {
 
         const name = event.target.name;
         const value = event.target.value;
@@ -37,8 +40,8 @@ export default class AGForm extends Component {
             // qcPer: (this.state.qc / this.state.unbucked) * 100,
         }, () => {
             this.setState({
-                buckedPer: (this.state.bucked / this.state.unbucked) * 100,
-                qcPer: (this.state.qc / this.state.unbucked) * 100
+                buckedPer: ((this.state.bucked / this.state.unbucked) * 100).toFixed(0),
+                qcPer: ((this.state.qc / this.state.unbucked) * 100).toFixed(0)
             })
 
             // console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer)
@@ -48,18 +51,47 @@ export default class AGForm extends Component {
         });
     };
 
-    handleSubmit(event) {
+    formSubmit(event) {
         console.log(event.target.toString());
         event.preventDefault();
+
+        if (this.state.formSubmit) {
+            this.setState({
+                submitMessage: 'NOT SAVED!!'
+            })
+        } else {
+            this.setState({formSubmit: true})
+        }
+
     };
 
-// onChange={this.handleChange}
+    // fieldClick = (e) => {
+    //     if (e.name !== "bucked") {
+    //         this.setState({
+    //             qc: {
+    //                 hidden: false
+    //             }
+    //         }); //bucked if
+    //     } else if (e.name !== "qc") {
+    //         this.setState({
+    //             bucked: {
+    //                 hidden: false
+    //             }
+    //         });
+    //     }
+    // };
+
     render() {
 
         console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer)
 
+        {
+
+        }
+
+        // const hidden = true;
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.formSubmit}>
                 <table>
                     <caption>Fill the fields, bub!</caption>
                     <thead>
@@ -76,50 +108,61 @@ export default class AGForm extends Component {
                     <tr>
                         <td/>
                         <td>
+
                             <label>
                                 Unbucked total:
                             </label>
                             <input type="number" name="unbucked" value={this.state.unbucked}
-                                   onChange={this.handleChange}/>
+                                   className="AGFormField"
+                                   onChange={this.fieldChange}/>
                         </td>
                     </tr>
-                    <tr>
+
+                    {/*<div className={hidden ? 'hidden' : ''}>*/}
+                    {/*This will be hidden if you set <tt>props.shouldHide</tt>*/}
+                    {/*to something truthy.*/}
+                    {/*</div>*/}
+
+                    <tr className={this.state.unbucked ? 'row' : 'row hidden'}>
                         <td>
                             <label>
                                 Bucked total:
                             </label>
-                            <input type="number" name="bucked" value={this.state.bucked} onChange={this.handleChange}/>
+                            <input type="number" name="bucked" value={this.state.bucked}
+                                   className="AGFormField"
+                                   onChange={this.fieldChange}/>
                         </td>
                         <td>
                             <label>
                                 % of total:
                             </label>
                             <textarea name="buckedPer" readOnly={true}
-                                      value={this.state.buckedPer}/>
+                                      className="AGFormField Per" value={this.state.buckedPer}/>
 
                             {/*<textarea datatype={this.state.buckedPer} value={(this.state.bucked / this.state.unbucked) * 100}/>*/}
                         </td>
                     </tr>
 
-                    <tr>
+
+                    <tr className={this.state.bucked ? 'row' : 'row hidden'}>
                         <td>
                             <label>
                                 Ready for QC:
                             </label>
-                            <input type="number" name="qc" value={this.state.qc} onChange={this.handleChange}/>
+                            <input type="number" name="qc" value={this.state.qc} className="AGFormField"
+                                   onChange={this.fieldChange}/>
                         </td>
                         <td>
                             <label>
                                 % of total:
                             </label>
-                            <textarea name="qcPer" readOnly={true} value={this.state.qcPer}/>
+                            <textarea name="qcPer" className="AGFormField Per" readOnly={true}
+                                      value={this.state.qcPer}/>
                         </td>
-
-
                     </tr>
                     <tr>
                         <td>
-                            <input type="submit" value="Submit"/>
+                            <input type="submit" value={this.state.submitMessage} onClick={this.formSubmit}/>
                         </td>
                     </tr>
                     </tbody>
@@ -130,7 +173,7 @@ export default class AGForm extends Component {
     } //render
 // this.state.unbucked / this.state.bucked
 
-// handleSubmit(event) {
+// formSubmit(event) {
 //     alert('A name was submitted: ' + this.state.value);
 //     event.preventDefault();
 // }
