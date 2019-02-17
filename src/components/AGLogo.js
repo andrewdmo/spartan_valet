@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import AGLogo_2 from '../assets/AGLogo_2.jpg';
-import MapContainer from "../containers/Map.container";
 import AGIndex from "./AGIndex";
 
 export default class AGLogo extends Component {

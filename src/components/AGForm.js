@@ -11,6 +11,7 @@ export default class AGForm extends Component {
             // buckedPer: this.state.bucked / this.state.unbucked,
             qc: '',
             qcPer: 0,
+            submitForm: false,
             submitMessage: 'Save?'
             // qcPer: this.state.qc / this.state.unbucked
         };
@@ -52,17 +53,20 @@ export default class AGForm extends Component {
     };
 
     formSubmit(event) {
-        console.log(event.target.toString());
+        console.log(event.target);
         event.preventDefault();
 
-        if (this.state.formSubmit) {
+        if (this.state.submitForm !== false) {
             this.setState({
+                // submitForm: true,
                 submitMessage: 'NOT SAVED!!'
             })
         } else {
-            this.setState({formSubmit: true})
+            this.setState({
+                submitForm: !this.state.submitForm,
+                submitMessage: 'Saved?!!'
+            })
         }
-
     };
 
     // fieldClick = (e) => {
@@ -70,7 +74,7 @@ export default class AGForm extends Component {
     //         this.setState({
     //             qc: {
     //                 hidden: false
-    //             }
+    //             }xxxxxxxxx
     //         }); //bucked if
     //     } else if (e.name !== "qc") {
     //         this.setState({
@@ -83,7 +87,7 @@ export default class AGForm extends Component {
 
     render() {
 
-        console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer)
+        console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer, '\nsubmitForm: ', this.state.formSubmit);
 
         {
 
@@ -108,7 +112,6 @@ export default class AGForm extends Component {
                     <tr>
                         <td/>
                         <td>
-
                             <label>
                                 Unbucked total:
                             </label>
@@ -139,7 +142,6 @@ export default class AGForm extends Component {
                             <textarea name="buckedPer" readOnly={true}
                                       className="AGFormField Per" value={this.state.buckedPer}/>
 
-                            {/*<textarea datatype={this.state.buckedPer} value={(this.state.bucked / this.state.unbucked) * 100}/>*/}
                         </td>
                     </tr>
 
@@ -153,11 +155,13 @@ export default class AGForm extends Component {
                                    onChange={this.fieldChange}/>
                         </td>
                         <td>
-                            <label>
-                                % of total:
-                            </label>
-                            <textarea name="qcPer" className="AGFormField Per" readOnly={true}
-                                      value={this.state.qcPer}/>
+                            <div>
+                                <label>
+                                    % of total:
+                                </label>
+                                <textarea name="qcPer" className="AGFormField Per" readOnly={true}
+                                          value={this.state.qcPer}/>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -171,9 +175,9 @@ export default class AGForm extends Component {
 
         );
     } //render
-// this.state.unbucked / this.state.bucked
+    // this.state.unbucked / this.state.bucked
 
-// formSubmit(event) {
+    // formSubmit(event) {
 //     alert('A name was submitted: ' + this.state.value);
 //     event.preventDefault();
 // }

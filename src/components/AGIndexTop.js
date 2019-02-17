@@ -13,7 +13,7 @@ export default class AGIndexTop extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.setState({fade: "in"}); //not used
+        this.setState({fade: "in"});
     }
 
     render() {
@@ -21,7 +21,7 @@ export default class AGIndexTop extends Component {
         return (
             <div className="top">
                 <img src={AGLogo_} alt={'AGLogo'} className="AGBackPic shadow"/>
-                <AGLogo/> {/*spinning object*/}
+                <AGLogo/>
                 <h1 className="topTitle shadow">AG3: the Future of Now</h1>
             </div>
         );
