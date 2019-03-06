@@ -5,6 +5,8 @@ export default class AGForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
+            strain: '',
             unbucked: '',
             bucked: '',
             buckedPer: 0,
@@ -19,6 +21,7 @@ export default class AGForm extends Component {
         // this.fieldClick = this.fieldClick.bind(this);
         this.fieldChange = this.fieldChange.bind(this);
         this.formSubmit = this.formSubmit.bind(this);
+        this.radioClick = this.radioClick.bind(this);
     }
 
 
@@ -51,6 +54,13 @@ export default class AGForm extends Component {
             // this.setState({values: event.target.value});
         });
     };
+
+    radioClick = (event) => {
+        this.setState({
+            strain: event.target.value
+        })
+    };
+
 
     formSubmit(event) {
         console.log(event.target);
@@ -87,17 +97,20 @@ export default class AGForm extends Component {
 
     render() {
 
-        console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer, '\nsubmitForm: ', this.state.formSubmit);
+        console.log(
+            'strain: ', this.state.strain,
+            '\nunbucked: ', this.state.unbucked,
+            '\nbucked: ', this.state.bucked,
+            '\nbuckedPer: ', this.state.buckedPer,
+            '\nqc: ', this.state.qc,
+            '\nqcPer: ', this.state.qcPer,
+            '\nsubmitForm: ', this.state.formSubmit);
 
-        {
-
-        }
 
         // const hidden = true;
         return (
             <form onSubmit={this.formSubmit}>
                 <table>
-                    <caption>Fill the fields, bub!</caption>
                     <thead>
                     <tr>
                         <th>
@@ -107,10 +120,32 @@ export default class AGForm extends Component {
                         </th>
                     </tr>
                     </thead>
+                    <caption>Fill the fields, bub!</caption>
+
 
                     <tbody>
+
                     <tr>
-                        <td/>
+                        <td>
+                            <fieldset>
+
+                                <select
+                                    onChange={this.radioClick}>
+                                    <option
+                                        name="strain" value={this.state.strain}>
+                                        Select strain:
+                                    </option>
+                                    <option name="strain" value='SSC'>
+                                        Sour Space
+                                    </option>
+                                    <option name="strain" value="SS"
+                                            className="AGRadio"
+                                    >
+                                        Special Sauce
+                                    </option>
+                                </select>
+                            </fieldset>
+                        </td>
                         <td>
                             <label>
                                 Unbucked total:
@@ -120,6 +155,7 @@ export default class AGForm extends Component {
                                    onChange={this.fieldChange}/>
                         </td>
                     </tr>
+
 
                     {/*<div className={hidden ? 'hidden' : ''}>*/}
                     {/*This will be hidden if you set <tt>props.shouldHide</tt>*/}

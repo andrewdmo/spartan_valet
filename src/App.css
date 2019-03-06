@@ -97,6 +97,10 @@ td, .td {
     max-width: 80vw;
 }
 
+.AGRadio {
+    width: 100%
+}
+
 .App {
     text-align: center;
 }
