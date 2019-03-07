@@ -13,6 +13,11 @@ export default class AGForm extends Component {
             // buckedPer: this.state.bucked / this.state.unbucked,
             qc: '',
             qcPer: 0,
+            bio: '',
+            bioPer: 0,
+            bBud: '',
+            bBudPer: 0,
+            final: 0,
             submitForm: false,
             submitMessage: 'Save?'
             // qcPer: this.state.qc / this.state.unbucked
@@ -45,7 +50,10 @@ export default class AGForm extends Component {
         }, () => {
             this.setState({
                 buckedPer: ((this.state.bucked / this.state.unbucked) * 100).toFixed(0),
-                qcPer: ((this.state.qc / this.state.unbucked) * 100).toFixed(0)
+                qcPer: ((this.state.qc / this.state.unbucked) * 100).toFixed(0),
+                bioPer: ((this.state.bio / this.state.qc) * 100).toFixed(0),
+                bBudPer: ((this.state.bBud / this.state.qc) * 100).toFixed(0),
+                final: ((this.state.qc - this.state.bio - this.state.bBud))
             })
 
             // console.log('unbucked: ', this.state.unbucked, '\nbucked: ', this.state.bucked, '\nbuckedPer: ', this.state.buckedPer, '\nqc: ', this.state.qc, '\nqcPer: ', this.state.qcPer)
@@ -109,106 +117,152 @@ export default class AGForm extends Component {
 
         // const hidden = true;
         return (
-            <form onSubmit={this.formSubmit}>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>
-                            <title>
-                                AG3 Form Sheet 4.2.0
-                            </title>
-                        </th>
-                    </tr>
-                    </thead>
-                    <caption>Fill the fields, bub!</caption>
+            <fieldset>
+
+                <form onSubmit={this.formSubmit}>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>
+                                <title>
+                                    AG3 Form Sheet 4.2.0
+                                </title>
+                            </th>
+                        </tr>
+                        </thead>
 
 
-                    <tbody>
-
-                    <tr>
-                        <td>
-                            <fieldset>
-
+                        <tbody>
+                        <tr>
+                            <td>
                                 <select
-                                    onChange={this.radioClick}>
+                                    onChange={this.radioClick}
+                                    className="AGFormField">
                                     <option
                                         name="strain" value={this.state.strain}>
                                         Select strain:
                                     </option>
-                                    <option name="strain" value='SSC'>
+                                    <option name="strain" value="SSC">
                                         Sour Space
                                     </option>
-                                    <option name="strain" value="SS"
-                                            className="AGRadio"
-                                    >
+                                    <option name="strain" value="SS">
                                         Special Sauce
                                     </option>
                                 </select>
-                            </fieldset>
-                        </td>
-                        <td>
-                            <label>
-                                Unbucked total:
-                            </label>
-                            <input type="number" name="unbucked" value={this.state.unbucked}
-                                   className="AGFormField"
-                                   onChange={this.fieldChange}/>
-                        </td>
-                    </tr>
+                            </td>
+                            <td className={this.state.strain ? 'row' : 'row hidden'}>
+                                <label>
+                                    Unbucked total:
+                                </label>
+                                <input type="number" name="unbucked" value={this.state.unbucked}
+                                       className="AGFormField"
+                                       onChange={this.fieldChange}/>
+                            </td>
+                        </tr>
 
 
-                    {/*<div className={hidden ? 'hidden' : ''}>*/}
-                    {/*This will be hidden if you set <tt>props.shouldHide</tt>*/}
-                    {/*to something truthy.*/}
-                    {/*</div>*/}
-
-                    <tr className={this.state.unbucked ? 'row' : 'row hidden'}>
-                        <td>
-                            <label>
-                                Bucked total:
-                            </label>
-                            <input type="number" name="bucked" value={this.state.bucked}
-                                   className="AGFormField"
-                                   onChange={this.fieldChange}/>
-                        </td>
-                        <td>
-                            <label>
-                                % of total:
-                            </label>
-                            <textarea name="buckedPer" readOnly={true}
-                                      className="AGFormField Per" value={this.state.buckedPer}/>
-
-                        </td>
-                    </tr>
-
-
-                    <tr className={this.state.bucked ? 'row' : 'row hidden'}>
-                        <td>
-                            <label>
-                                Ready for QC:
-                            </label>
-                            <input type="number" name="qc" value={this.state.qc} className="AGFormField"
-                                   onChange={this.fieldChange}/>
-                        </td>
-                        <td>
-                            <div>
+                        <tr className={this.state.unbucked ? 'row' : 'row hidden'}>
+                            <td>
+                                <label>
+                                    Bucked total:
+                                </label>
+                                <input type="number" name="bucked" value={this.state.bucked}
+                                       className="AGFormField"
+                                       onChange={this.fieldChange}/>
+                            </td>
+                            <td>
                                 <label>
                                     % of total:
                                 </label>
-                                <textarea name="qcPer" className="AGFormField Per" readOnly={true}
-                                          value={this.state.qcPer}/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" value={this.state.submitMessage} onClick={this.formSubmit}/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
+                                <textarea name="buckedPer" readOnly={true}
+                                          className="AGFormField Per" value={this.state.buckedPer}/>
 
+                            </td>
+                        </tr>
+
+
+                        <tr className={this.state.bucked ? 'row' : 'row hidden'}>
+                            <td>
+                                <label>
+                                    Ready for QC:
+                                </label>
+                                <input type="number" name="qc" value={this.state.qc} className="AGFormField"
+                                       onChange={this.fieldChange}/>
+                            </td>
+                            <td>
+                                <div>
+                                    <label>
+                                        % of total:
+                                    </label>
+                                    <textarea name="qcPer" className="AGFormField Per" readOnly={true}
+                                              value={this.state.qcPer}/>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr className={this.state.qc ? 'row' : 'row hidden'}>
+                            <td>
+                                <label>
+                                    Biomass
+                                </label>
+                                <input type="number" name="bio" value={this.state.bio} className="AGFormField"
+                                       onChange={this.fieldChange}/>
+                            </td>
+                            <td>
+                                <div>
+                                    <label>
+                                        % of QC total:
+                                    </label>
+                                    <textarea name="bioPer" className="AGFormField Per" readOnly={true}
+                                              value={this.state.bioPer}/>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr className={this.state.bio ? 'row' : 'row hidden'}>
+                            <td>
+                                <label>
+                                    B-buds
+                                </label>
+                                <input type="number" name="bBud" value={this.state.bBud} className="AGFormField"
+                                       onChange={this.fieldChange}/>
+                            </td>
+                            <td>
+                                <div>
+                                    <label>
+                                        % of QC total:
+                                    </label>
+                                    <textarea name="bBudPer" className="AGFormField Per" unselectable={true}
+                                              value={this.state.bBudPer}/>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr className={this.state.bBud ? 'row' : 'row hidden'}>
+                            <td/>
+
+                            <td>
+                                <div className="blinker">
+                                    <label>
+                                        Final total:
+                                    </label>
+                                    <textarea name="final" className="AGFormField Per Final" unselectable={true}
+                                              readOnly={true}
+                                              value={this.state.final}/>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colSpan={2}>
+                                <input type="submit" value={this.state.submitMessage} onClick={this.formSubmit}/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </fieldset>
         );
     } //render
     // this.state.unbucked / this.state.bucked

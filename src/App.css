@@ -25,8 +25,9 @@ h1, h2, p {
 }
 
 table, .table {
-    empty-cells: show;
+    /*empty-cells: show;*/
     max-width: 95vw;
+    margin: 5vh auto 0 auto;
 }
 
 .row {
@@ -35,7 +36,7 @@ table, .table {
 }
 
 td, .td {
-    /*max-width: 40vw;*/
+    max-width: 45vw;
 }
 
 .hidden {
@@ -57,13 +58,17 @@ td, .td {
 
 .AGFormField {
     height: 18px;
+    background-color: cornsilk;
+    width: 80%;
     /*opacity: 1;*/
     /*transition: all 1s ease-out;*/
 }
 
 .AGFormField.Per {
     background-color: rgba(99, 150, 199, 0.57);
-    vertical-align: center;
+    user-select: none;
+    /*width: 80%;*/
+    /*vertical-align: center;*/
     font-size: larger;
     user-select: none;
     user-focus: none;
@@ -141,6 +146,10 @@ td, .td {
     width: 40vmin;
     margin-top: 5vh;
     /*margin-right: 40px;*/
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
 }
 
 /*FASTER */
@@ -262,5 +271,11 @@ td, .td {
     }
     to {
         transform: rotate(0deg);
+    }
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
     }
 }
