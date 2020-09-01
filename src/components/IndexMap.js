@@ -7,6 +7,8 @@ import MapGeo from "../containers/Map.geo";
 
 export default class IndexMap extends Component {
 
+    // TODO token / login => MapGeo props
+
     render() {
         return (
             <MapGeo/>

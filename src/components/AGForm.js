@@ -121,16 +121,9 @@ export default class AGForm extends Component {
 
                 <form onSubmit={this.formSubmit}>
                     <table>
-                        <thead>
-                        <tr>
-                            <th>
-                                <title>
-                                    AG3 Form Sheet 4.2.0
-                                </title>
-                            </th>
-                        </tr>
-                        </thead>
-
+                        <caption>
+                            AG3 Form Sheet 4.2.0
+                        </caption>
 
                         <tbody>
                         <tr>

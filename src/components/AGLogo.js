@@ -17,8 +17,8 @@ export default class AGLogo extends Component {
 
 
     // use state for rotation/effects:
-    logoClick = () => {
-        // e.preventDefault(); //prevent default link behavior
+    logoClick = (e) => {
+        e.preventDefault(); //prevent default link behavior
 
         AGIndex.forceUpdate = (e) => {
             console.log('forceUpdate e: ' + e);

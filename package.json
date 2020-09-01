@@ -7,7 +7,7 @@
     "cors": "^2.8.5",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
-    "google-map-react": "^1.1.0",
+    "google-map-react": "^2.0.6",
     "google-maps": "^3.3.0",
     "helmet": "^3.15.0",
     "history": "^4.7.2",

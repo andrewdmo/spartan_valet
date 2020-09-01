@@ -17,12 +17,8 @@ export default class Logo extends Component {
 
 
     // use state for rotation/effects:
-    logoClick = () => {
+    logoClick = (e) => {
         // e.preventDefault(); //prevent default link behavior
-
-        Map.container.forceUpdate = (e) => {
-            console.log('forceUpdate e: ' + e);
-        };
 
 
         // console.log('updateLat: ' + this.updatePos.coords.lat);
@@ -37,6 +33,10 @@ export default class Logo extends Component {
         } else {
             this.setState({spin: 'topLogo unclockwise'})
         }
+
+        MapContainer.forceUpdate = (e) => {
+            console.log('forceUpdate e: ' + e);
+        };
 
     };
 

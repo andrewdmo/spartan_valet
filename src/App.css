@@ -203,6 +203,7 @@ td, .td {
     width: 100%;
     max-width: 85vw;
     top: 0;
+    opacity: .8;
     /*padding: 20px;*/
     /*color: white;*/
     position: fixed;

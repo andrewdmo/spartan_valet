@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Gmap from '../components/Gmap';
-import {fitBounds} from "google-map-react/utils";
-
+import {fitBounds} from "google-map-react";
 
 export default class MapGeo extends Component {
 
@@ -16,7 +15,7 @@ export default class MapGeo extends Component {
                 lastCoords: {
                     lat: 35.1111, lng: -82.0003, workDate: ''
                 },
-                priorCoords: {
+                olderCoords: {
                     lat: 35.0001, lng: -82.0002, workDate: ''
                 },
                 initialCoords: {
@@ -29,47 +28,50 @@ export default class MapGeo extends Component {
             newMessage: false,
             seconds: 0,
             zoom: 9,
-            // center: {lat: 35.55953, lng: -82.5515},
+            center: {lat: 35.55953, lng: -82.5515},
 
 
             // combine like coords:
             currentMessage: 'searching', //todo add load spin
-            lastMessage: 'LAST coords:',
-            priorMessage: 'PRIOR coords: ',
-            initialMessage: 'INITIAL coords: ',
+            lastMessage: 'LAST msg:',
+            olderMessage: 'older msg: ',
+            initialMessage: 'INITIAL msg: ',
         }; // this.state
 
-        this.getFitBounds = this.getFitBounds.bind(this);
+        // this.getFitBounds = this.getFitBounds.bind(this);
         // this.geolocation.getCurrentPosition = this.geolocation.getCurrentPosition.bind(this);
 
     } // constructor
 
     componentDidMount() {
 
-        // 1. LIVE location + setState currentCoords: -----------------------------<
-
         const self = this;
         if (navigator.geolocation) {
+
             navigator.geolocation.getCurrentPosition((pos) => {   //once LIVE geoLoc returned:
 
-                    // console.log('GEOLO live!  new lat: ', pos.coords.latitude);
-
-                    // this.newCoords(pos);
-                    const newCoords = {
-                        lat: pos.coords.latitude,
-                        lng: pos.coords.longitude,
-                        workDate: new Date().toLocaleTimeString()
-                    };
-
-                    // const newCoords = this;
                     this.setState(() => ({
                         coords: {
-                            // currentCoords: newCoords
+
+                            olderCoords: {
+                                lat: this.state.coords.lastCoords.lat,
+                                lng: this.state.coords.lastCoords.lng,
+                                workDate: this.state.coords.lastCoords.workDate
+                            },
+
+                            lastCoords: {
+                                lat: this.state.coords.currentCoords.lat,
+                                lng: this.state.coords.currentCoords.lng,
+                                workDate: this.state.coords.currentCoords.workDate
+                            },
+
                             currentCoords: {
                                 lat: pos.coords.latitude,
                                 lng: pos.coords.longitude,
                                 workDate: new Date().toLocaleTimeString()
                             },
+
+                            initialCoords: this.state.coords.initialCoords
                         }, // coords
                         LIVEupdated: true,
                         currentMessage: 'LIVE coords: '
@@ -80,11 +82,24 @@ export default class MapGeo extends Component {
 
                 (err) => {
                     console.warn(`GeoLocation /\nyour problem Error: \n(${err.code}): ${err.message}`);
-                    this.setState({
-                        LIVEupdated: false,
-                        currentMessage: 'GeoLocation /\n(YOUR) Error: ' + err.message,
-                        coords: {currentCoords: {workDate: new Date().toLocaleTimeString()}}
-                    });
+                    // this.setState({
+                    //     LIVEupdated: false,
+                    //     currentMessage: 'GeoLocation /\n(YOUR) Error: ' + err.message,
+                    //     coords: {
+                    //         olderCoords: {
+                    //             lat: this.state.coords.lastCoords.lat,
+                    //             lng: this.state.coords.lastCoords.lng,
+                    //             workDate: this.state.coords.lastCoords.workDate
+                    //         },
+                    //         lastCoords: {
+                    //             lat: this.state.coords.currentCoords.lat,
+                    //             lng: this.state.coords.currentCoords.lng,
+                    //             workDate: this.state.coords.currentCoords.workDate
+                    //         },
+                    //         currentCoords: {workDate: new Date().toLocaleTimeString()},
+                    //         initialCoords: this.state.coords.initialCoords
+                    //     },
+                    // });         //setState
                 }, //error
                 {
                     enableHighAccuracy: true,
@@ -94,94 +109,87 @@ export default class MapGeo extends Component {
                         0
                 } //option
             ); //end NAV.geoLO
+        } // if (geo)
+        else {
+            console.log('no geo')
         }
     } //componentDidMount
 
-    getFitBounds() {  // NO setState right now
-
-        // console.log('GETFITBOUNDS current: ' + this.state.coords.currentCoords.lat +
-        //     '\nlast: ' + this.state.coords.lastCoords.lat +
-        //     '\nprior: ' + this.state.coords.priorCoords.lat +
-        //     '\ninitial: ' + this.state.coords.initialCoords.lat);
-
-        //LAT
-        const maxLat = Math.max(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.priorCoords.lat, this.state.coords.initialCoords.lat);
-        const minLat = Math.min(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.priorCoords.lat, this.state.coords.initialCoords.lat);
-        //LONG
-        const maxLng = Math.max(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.priorCoords.lng, this.state.coords.initialCoords.lng);
-        const minLng = Math.min(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.priorCoords.lng, this.state.coords.initialCoords.lng);
-
-        //may need to change:
-        const bounds = {
-
-            ne: {lat: maxLat, lng: maxLng}, //long is -
-            sw: {lat: minLat, lng: minLng},
-
-            // nw: {lat: maxLat, lng: minLng},
-            // se: {lat: minLat, lng: maxLng},
-
-        };
-
-        // console.log('maxLat: ', maxLat);
-        // console.log('minLat: ', minLat);
-        // console.log('maxLng: ', maxLng);
-        // console.log('minLng: ', minLng);
-
-        const size = {
-            // width: 640, // Map width in pixels
-            // height: 380, // Map height in pixels
-
-            //viewport:
-            width: window.innerWidth,
-            height: window.innerHeight,
-        };
-        // console.log('size.heaight: ', size.height);
-
-        const {center, zoom} = fitBounds(bounds, size);
-
-        // console.log('zoom: ' + zoom);
-        // console.log('center.lat: ' + center.lat);
-        // console.log('center.lng: ' + center.lng);
-
-        // this.setState({zoom: zoom, center: center});
-
-        // const newCenter = {
-        //     lat: (center.lat * .8),
-        //     lng: center.lng
-        // };
-        // console.log('newCenter: ', newCenter.lat);
-
-        // const center2 = center;
-        // center2.lat = (center2.lat * .8); //doesn't work, shorten for header
-
-        // const zoom = 9;
-
-        return {center, zoom};
-
-    }; //getFitBounds
+    // getFitBounds() {  // flex map zoom, NO setState right now
+    //
+    //     console.log('GETFITBOUNDS current: ' + this.state.coords.currentCoords.lat +
+    //         '\nlast: ' + this.state.coords.lastCoords.lat +
+    //         '\nolder: ' + this.state.coords.olderCoords.lat +
+    //         '\ninitial: ' + this.state.coords.initialCoords.lat);
+    //
+    //     //LAT
+    //     const maxLat = Math.max(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.olderCoords.lat, this.state.coords.initialCoords.lat);
+    //     const minLat = Math.min(this.state.coords.currentCoords.lat, this.state.coords.lastCoords.lat, this.state.coords.olderCoords.lat, this.state.coords.initialCoords.lat);
+    //     //LONG
+    //     const maxLng = Math.max(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.olderCoords.lng, this.state.coords.initialCoords.lng);
+    //     const minLng = Math.min(this.state.coords.currentCoords.lng, this.state.coords.lastCoords.lng, this.state.coords.olderCoords.lng, this.state.coords.initialCoords.lng);
+    //
+    //     //may need to change:
+    //     const bounds = {
+    //
+    //         ne: {lat: maxLat, lng: maxLng}, //long is -
+    //         sw: {lat: minLat, lng: minLng},
+    //
+    //         // nw: {lat: maxLat, lng: minLng},
+    //         // se: {lat: minLat, lng: maxLng},
+    //
+    //     };
+    //
+    //     // console.log('maxLat: ', maxLat);
+    //     // console.log('minLat: ', minLat);
+    //     // console.log('maxLng: ', maxLng);
+    //     // console.log('minLng: ', minLng);
+    //
+    //     const size = {
+    //         // width: 640, // Map width in pixels
+    //         // height: 380, // Map height in pixels
+    //
+    //         //viewport:
+    //         width: window.innerWidth,
+    //         height: window.innerHeight,
+    //     };
+    //     // console.log('size.heaight: ', size.height);
+    //
+    //     const {center, zoom} = fitBounds(bounds, size);
+    //
+    //     // console.log('zoom: ' + zoom);
+    //     // console.log('center.lat: ' + center.lat);
+    //     // console.log('center.lng: ' + center.lng);
+    //
+    //     // this.setState({zoom: zoom, center: center});
+    //
+    //     // const newCenter = {
+    //     //     lat: (center.lat * .8),
+    //     //     lng: center.lng
+    //     // };
+    //     // console.log('newCenter: ', newCenter.lat);
+    //
+    //     // const center2 = center;
+    //     // center2.lat = (center2.lat * .8); //doesn't work, shorten for header
+    //
+    //     // const zoom = 9;
+    //
+    //     return {center, zoom};
+    //
+    // };  //getFitBounds
 
     render() {
 
-        // return null;
-
-        // return {coords: this.state.coords};
-
-        // return React.createElement("coords", {coords: this.state.coords})
+        // const {center, zoom} = this.getFitBounds();
 
         console.log(
             'RENDER current: ' + this.state.coords.currentCoords.lat +
             '\nlast: ' + this.state.coords.lastCoords.lat +
-            '\nprior: ' + this.state.coords.priorCoords.lat +
-            '\ninitial: ' + this.state.coords.initialCoords.lat
+            '\nolder: ' + this.state.coords.olderCoords.lat +
+            '\ninitial: ' + this.state.coords.initialCoords.lat +
+            '\nLIVEupdated: ', this.state.LIVEupdated +
+            '\nDBupdated: ', this.state.DBupdated
         );
-
-        // const {center, zoom} = this.getFitBounds();
-        const {center, zoom} = this.getFitBounds();
-
-
-        console.log('LIVEupdated: ', this.state.LIVEupdated);
-        console.log('DBupdated: ', this.state.DBupdated);
-        console.log('zoom: ', zoom);
 
         return (
             <Gmap
@@ -189,7 +197,7 @@ export default class MapGeo extends Component {
                 coords={this.state.coords}
                 // currentCoords={this.state.coords.currentCoords}
                 // lastCoords={this.state.coords.lastCoords}
-                // priorCoords={this.state.coords.priorCoords}
+                // olderCoords={this.state.coords.olderCoords}
                 // initialCoords={this.state.coords.initialCoords}
                 //
                 LIVEupdated={this.state.LIVEupdated}
@@ -197,11 +205,13 @@ export default class MapGeo extends Component {
                 newMessage={this.state.newMessage} //redundant
                 seconds={0}
 
-                center={center} //single bracket
-                zoom={zoom} //single bracket
+                center={this.state.center} //single bracket
+                zoom={this.state.zoom} //single bracket
+                // center={center} //single bracket
+                // zoom={zoom} //single bracket
                 currentMessage={this.state.currentMessage}
                 lastMessage={this.state.lastMessage}
-                priorMessage={this.state.priorMessage}
+                olderMessage={this.state.olderMessage}
                 initialMessage={this.state.initialMessage}
             />
         )
