@@ -115,6 +115,77 @@ export default class MapGeo extends Component {
         }
     } //componentDidMount
 
+    componentDidUpdate() {
+
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition((pos) => {   //once LIVE geoLoc returned:
+
+                    this.setState(() => ({
+                        coords: {
+
+                            olderCoords: {
+                                lat: this.state.coords.lastCoords.lat,
+                                lng: this.state.coords.lastCoords.lng,
+                                workDate: this.state.coords.lastCoords.workDate
+                            },
+
+                            lastCoords: {
+                                lat: this.state.coords.currentCoords.lat,
+                                lng: this.state.coords.currentCoords.lng,
+                                workDate: this.state.coords.currentCoords.workDate
+                            },
+
+                            currentCoords: {
+                                lat: pos.coords.latitude,
+                                lng: pos.coords.longitude,
+                                workDate: new Date().toLocaleTimeString()
+                            },
+
+                            initialCoords: this.state.coords.initialCoords
+                        }, // coords
+                        LIVEupdated: true,
+                        currentMessage: 'LIVE coords: '
+                    })); // setState
+
+                    console.log('GEOLO live!  new lat: ', pos.coords.latitude);
+                }, //callback
+
+                (err) => {
+                    console.warn(`GeoLocation /\nyour problem Error: \n(${err.code}): ${err.message}`);
+                    // this.setState({
+                    //     LIVEupdated: false,
+                    //     currentMessage: 'GeoLocation /\n(YOUR) Error: ' + err.message,
+                    //     coords: {
+                    //         olderCoords: {
+                    //             lat: this.state.coords.lastCoords.lat,
+                    //             lng: this.state.coords.lastCoords.lng,
+                    //             workDate: this.state.coords.lastCoords.workDate
+                    //         },
+                    //         lastCoords: {
+                    //             lat: this.state.coords.currentCoords.lat,
+                    //             lng: this.state.coords.currentCoords.lng,
+                    //             workDate: this.state.coords.currentCoords.workDate
+                    //         },
+                    //         currentCoords: {workDate: new Date().toLocaleTimeString()},
+                    //         initialCoords: this.state.coords.initialCoords
+                    //     },
+                    // });         //setState
+                }, //error
+                {
+                    enableHighAccuracy: true,
+                    timeout:
+                        10000,
+                    maximumAge:
+                        0
+                } //option
+            ); //end NAV.geoLO
+        } // if (geo)
+        else {
+            console.log('no geo update')
+        }
+    } //componentDidMount
+
     // getFitBounds() {  // flex map zoom, NO setState right now
     //
     //     console.log('GETFITBOUNDS current: ' + this.state.coords.currentCoords.lat +
