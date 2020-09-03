@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1fbfd073-d7f0-4e1c-89b0-76074a06f0db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Map.geo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Map.geo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +279,9 @@
       <workItem from="1554417156101" duration="598000" />
       <workItem from="1554566586501" duration="32000" />
       <workItem from="1598894535825" duration="154000" />
-      <workItem from="1598976822804" duration="7785000" />
+      <workItem from="1598976822804" duration="7983000" />
+      <workItem from="1599146983982" duration="491000" />
+      <workItem from="1599149250569" duration="451000" />
     </task>
     <servers />
   </component>
