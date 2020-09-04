@@ -42,6 +42,8 @@ export default class Gmap extends Component {
                     fullScreenControlOptions={{position: 'BOTTOM_LEFT'}}
                     yesIWantToUseGoogleMapApiInternals={true}>
 
+
+                    {/*TODO fix opacity w/ CSS*/}
                     <MapDataBubble style={{opacity: '1'}}
                                    lat={this.props.coords.currentCoords.lat}
                                    lng={this.props.coords.currentCoords.lng}
