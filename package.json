@@ -27,7 +27,7 @@
   "scripts": {
     "dev": "cd server && nodemon server.js",
     "server": "cd server && node server.js",
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "aws s3 sync build/ s3://spartan-valet",

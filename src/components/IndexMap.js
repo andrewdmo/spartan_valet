@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import MapContainer from "../containers/Map.container";
 import MapGeo from "../containers/Map.geo";
 
 // ???:

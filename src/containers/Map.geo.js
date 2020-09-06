@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Gmap from '../components/Gmap';
-import {fitBounds} from "google-map-react";
 
 export default class MapGeo extends Component {
 
@@ -45,7 +44,6 @@ export default class MapGeo extends Component {
 
     componentDidMount() {
 
-        const self = this;
         if (navigator.geolocation) {
 
             navigator.geolocation.getCurrentPosition(

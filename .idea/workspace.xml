@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fbfd073-d7f0-4e1c-89b0-76074a06f0db" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/IndexMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/IndexMap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/Map.geo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Map.geo.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +62,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -81,19 +82,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/src/redux/reducers" />
-      <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/containers" />
-      <recent name="$PROJECT_DIR$/src/Components" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/public/SV_public" />
       <recent name="$PROJECT_DIR$/server/models" />
       <recent name="$PROJECT_DIR$/src/redux" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/src/redux/reducers" />
+      <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/containers" />
     </key>
   </component>
   <component name="RunManager">
@@ -283,7 +284,9 @@
       <workItem from="1598976822804" duration="7983000" />
       <workItem from="1599146983982" duration="491000" />
       <workItem from="1599149250569" duration="879000" />
-      <workItem from="1599231028935" duration="3837000" />
+      <workItem from="1599231028935" duration="4847000" />
+      <workItem from="1599339048227" duration="1695000" />
+      <workItem from="1599410946861" duration="850000" />
     </task>
     <servers />
   </component>
@@ -294,6 +297,10 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="440" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599342223681">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="440" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1599342223681" />
     <state x="421" y="205" width="598" height="490" key="find.popup" timestamp="1598987216931">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
