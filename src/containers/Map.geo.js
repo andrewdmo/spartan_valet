@@ -44,61 +44,56 @@ export default class MapGeo extends Component {
 
     componentDidMount() {
 
-        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {   //once LIVE geoLoc returned:
 
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {   //once LIVE geoLoc returned:
+                console.log('DidMOUNT geo started');
 
-                    console.log('DidMOUNT geo started');
+                this.setState(() => ({
+                    coords: {
 
-                    this.setState(() => ({
-                        coords: {
+                        olderCoords: {
+                            lat: this.state.coords.lastCoords.lat,
+                            lng: this.state.coords.lastCoords.lng,
+                            workDate: this.state.coords.lastCoords.workDate
+                        },
 
-                            olderCoords: {
-                                lat: this.state.coords.lastCoords.lat,
-                                lng: this.state.coords.lastCoords.lng,
-                                workDate: this.state.coords.lastCoords.workDate
-                            },
+                        lastCoords: {
+                            lat: this.state.coords.currentCoords.lat,
+                            lng: this.state.coords.currentCoords.lng,
+                            workDate: this.state.coords.currentCoords.workDate
+                        },
 
-                            lastCoords: {
-                                lat: this.state.coords.currentCoords.lat,
-                                lng: this.state.coords.currentCoords.lng,
-                                workDate: this.state.coords.currentCoords.workDate
-                            },
+                        currentCoords: {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude,
+                            workDate: new Date().toLocaleTimeString()
+                        },
 
-                            currentCoords: {
-                                lat: pos.coords.latitude,
-                                lng: pos.coords.longitude,
-                                workDate: new Date().toLocaleTimeString()
-                            },
+                        initialCoords: this.state.coords.initialCoords
+                    }, // coords
+                    LIVEupdated: true,
+                    currentMessage: 'LIVE coords: '
+                })); // setState
 
-                            initialCoords: this.state.coords.initialCoords
-                        }, // coords
-                        LIVEupdated: true,
-                        currentMessage: 'LIVE coords: '
-                    })); // setState
+                console.log('GEOLO live!  new lat: ', pos.coords.latitude);
+            }, //callback
 
-                    console.log('GEOLO live!  new lat: ', pos.coords.latitude);
-                }, //callback
+            (err) => {
+                console.warn(`GeoLocation /\nyour problem Error: \n(${err.code}): ${err.message}`);
 
-                (err) => {
-                    console.warn(`GeoLocation /\nyour problem Error: \n(${err.code}): ${err.message}`);
+                // TODO update function (timestamp)
 
-                    // TODO update function (timestamp)
+            }, //error
+            {
+                enableHighAccuracy: true,
+                timeout:
+                    3000,
+                maximumAge:
+                    0
+            } //option
+        ); //end NAV.geoLO
 
-                }, //error
-                {
-                    enableHighAccuracy: true,
-                    timeout:
-                        10000,
-                    maximumAge:
-                        0
-                } //option
-            ); //end NAV.geoLO
-        } // if (geo)
-        else {
-            console.log('no geo')
-        }
     } //componentDidMount
 
     componentDidUpdate() {
@@ -189,7 +184,7 @@ export default class MapGeo extends Component {
             // ); //end NAV.geoLO
         }       //  1st IF, skip geo if no state update
         else {
-            console.log('didUPDATE no geo')
+            console.log('no liveupdate, didUPDATE no geo')
         }
     }       //componentDidUpdate
 
